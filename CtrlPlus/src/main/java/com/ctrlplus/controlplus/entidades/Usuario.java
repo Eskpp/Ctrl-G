@@ -11,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Usuario {
     
     
-    //Renzo
+  
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
