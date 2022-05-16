@@ -1,7 +1,7 @@
 package com.ctrlplus.controlplus.entidades;
 
-import java.util.List;
 import javax.persistence.Entity;
+import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
