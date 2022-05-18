@@ -6,5 +6,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IngresoRepositorio extends JpaRepository<Ingreso, String> {
+    
+    //ordenar ingresos por fecha
+    
+    //ordenar ingresos por monto
+    
+    //buscar por descripción
 
 }

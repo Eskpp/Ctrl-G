@@ -6,5 +6,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GastoRepositorio extends JpaRepository<Gasto, String> {
+    //ordenar gastos por fecha
+    
+    //ordenar gastos por categoría
+    //buscar gastos por categoría
+    
+    //ordenar gastos por monto
+    
+     //buscar por descripción
 
 }
