@@ -4,6 +4,8 @@ import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.UsuarioRepositorio;
 import java.util.Optional;
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,13 +24,14 @@ public class UsuarioServicio {
         
         Usuario usuario = new Usuario();
         usuario.setMail(mail);
+        usuario.setNombre(conseguirNombre(mail));
         usuario.setClave(clave);
         
         return usuarioRepositorio.save(usuario);
     }
     
     @Transactional(propagation = Propagation.NESTED)
-    public Usuario modificar(String id, String mail, String clave) throws ErrorServicio{
+    public Usuario modificar(String id, String mail, String nombre, String clave) throws ErrorServicio{
         
         validar(mail, clave);
         
@@ -36,6 +39,7 @@ public class UsuarioServicio {
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
             usuario.setMail(mail);
+            usuario.setNombre(nombre);
             usuario.setClave(clave);
             return usuarioRepositorio.save(usuario);
         } else {
@@ -43,8 +47,8 @@ public class UsuarioServicio {
         }        
     }
     
-    @Transactional
-    public void borrar(String id) throws ErrorServicio{
+    @Transactional(propagation = Propagation.NESTED)
+    public void eliminar(String id) throws ErrorServicio{
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
@@ -54,14 +58,27 @@ public class UsuarioServicio {
         }
     }
     
+    public String conseguirNombre(String mail){
+        StringTokenizer st = new StringTokenizer(mail, "@");
+        return st.nextToken();
+    }
+    
     public void validar(String mail, String clave) throws ErrorServicio{
+        
+        String emailFormate = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern p = Pattern.compile(emailFormate);
+        
         if (mail == null || mail.trim().isEmpty()){
             throw new ErrorServicio("El mail no puede ser nulo");
         }
+        
+        if (!p.matcher(mail).matches()) {
+            throw new ErrorServicio("El mail no es inválido.");
+        }       
+        
         if (clave == null || clave.trim().isEmpty()){
             throw new ErrorServicio("La clave no puede ser nula");
         }
-        // agregar validaciones de formato de mail (nombre@direccion.algo)
         // agregar codificador de contraseña y que sea mas segura (max min)
     }
 }
