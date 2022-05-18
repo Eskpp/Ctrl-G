@@ -9,4 +9,13 @@ public class FotoServicio {
 
     @Autowired
     private FotoRepositorio fotoRepositorio;
+    
+    
+    
+    
+    
+    
+    
 }
+
+
