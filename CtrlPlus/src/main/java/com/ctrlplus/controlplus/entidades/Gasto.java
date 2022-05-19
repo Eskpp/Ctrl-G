@@ -26,12 +26,12 @@ public class Gasto {
     private Date fecha;
     
     @OneToOne
-    private Foto foto;
+    private Comprobante foto;
 
     public Gasto() {
     }
 
-    public Gasto(String descripcion, Categoria categoria, Double monto, Date fecha, Foto foto) {
+    public Gasto(String descripcion, Categoria categoria, Double monto, Date fecha, Comprobante foto) {
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.monto = monto;
@@ -79,11 +79,11 @@ public class Gasto {
         this.fecha = fecha;
     }
 
-    public Foto getFoto() {
+    public Comprobante getFoto() {
         return foto;
     }
 
-    public void setFoto(Foto foto) {
+    public void setFoto(Comprobante foto) {
         this.foto = foto;
     }
 

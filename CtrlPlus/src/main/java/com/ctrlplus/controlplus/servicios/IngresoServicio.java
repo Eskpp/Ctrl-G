@@ -1,6 +1,6 @@
 package com.ctrlplus.controlplus.servicios;
 
-import com.ctrlplus.controlplus.entidades.Foto;
+import com.ctrlplus.controlplus.entidades.Comprobante;
 import com.ctrlplus.controlplus.entidades.Ingreso;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.IngresoRepositorio;
@@ -21,7 +21,7 @@ public class IngresoServicio {
     Ingreso ingreso = new Ingreso();
 
     @Transactional(propagation = Propagation.NESTED)
-    public Ingreso agregar(Double monto, String descripcion, Foto foto) {
+    public Ingreso agregar(Double monto, String descripcion, Comprobante foto) {
 
         ingreso.setMonto(monto);
         ingreso.setFecha(new Date());
@@ -32,7 +32,7 @@ public class IngresoServicio {
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public void modificar(String id, Double monto, String descripcion, Foto foto) throws ErrorServicio {
+    public void modificar(String id, Double monto, String descripcion, Comprobante foto) throws ErrorServicio {
 
         validar(monto);
 

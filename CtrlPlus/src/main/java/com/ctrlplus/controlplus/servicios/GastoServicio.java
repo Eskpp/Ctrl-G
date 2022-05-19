@@ -1,6 +1,6 @@
 package com.ctrlplus.controlplus.servicios;
 
-import com.ctrlplus.controlplus.entidades.Foto;
+import com.ctrlplus.controlplus.entidades.Comprobante;
 import com.ctrlplus.controlplus.entidades.Gasto;
 import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
@@ -20,7 +20,7 @@ public class GastoServicio {
     private GastoRepositorio gastoRepositorio;
 
     @Transactional()
-    public Gasto agregar(Double monto, Categoria categoria, String descripcion, Foto foto) throws ErrorServicio {
+    public Gasto agregar(Double monto, Categoria categoria, String descripcion, Comprobante foto) throws ErrorServicio {
 
         validar(monto, categoria);
 
@@ -36,7 +36,7 @@ public class GastoServicio {
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public void modificar(String id, Double monto, Categoria categoria, String descripcion, Foto foto) throws ErrorServicio {
+    public void modificar(String id, Double monto, Categoria categoria, String descripcion, Comprobante foto) throws ErrorServicio {
 
         validar(monto, categoria);
 

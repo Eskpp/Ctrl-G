@@ -25,12 +25,12 @@ public class Ingreso {
     private Date fecha;
     
     @OneToOne
-    private Foto foto;
+    private Comprobante foto;
 
     public Ingreso() {
     }
 
-    public Ingreso(String descripcion, Double monto, Date fecha, Foto foto) {
+    public Ingreso(String descripcion, Double monto, Date fecha, Comprobante foto) {
         this.descripcion = descripcion;
         this.monto = monto;
         this.fecha = fecha;
@@ -69,11 +69,11 @@ public class Ingreso {
         this.fecha = fecha;
     }
 
-    public Foto getFoto() {
+    public Comprobante getFoto() {
         return foto;
     }
 
-    public void setFoto(Foto foto) {
+    public void setFoto(Comprobante foto) {
         this.foto = foto;
     }
 
