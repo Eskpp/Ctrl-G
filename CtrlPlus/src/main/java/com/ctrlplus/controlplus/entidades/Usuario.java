@@ -2,9 +2,11 @@ package com.ctrlplus.controlplus.entidades;
 
 import javax.persistence.Entity;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -15,8 +17,12 @@ public class Usuario {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
-    private String nombre;
+    @Column(unique = true)
     private String mail;
+    
+    @Column(nullable = false)
+    private String nombre;
+    
     private String clave;
     
     @OneToMany
