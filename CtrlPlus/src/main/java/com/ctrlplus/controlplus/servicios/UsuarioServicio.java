@@ -3,16 +3,28 @@ package com.ctrlplus.controlplus.servicios;
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.UsuarioRepositorio;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class UsuarioServicio {
+public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -23,9 +35,12 @@ public class UsuarioServicio {
         validar(mail, clave);
         
         Usuario usuario = new Usuario();
+        
         usuario.setMail(mail);
         usuario.setNombre(conseguirNombre(mail));
-        usuario.setClave(clave);
+        
+        String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
+        usuario.setClave(claveEncriptada);
         
         return usuarioRepositorio.save(usuario);
     }
@@ -80,5 +95,28 @@ public class UsuarioServicio {
             throw new ErrorServicio("La clave no puede ser nula");
         }
         // agregar codificador de contraseña y que sea mas segura (max min)
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        
+        Usuario usuario = usuarioRepositorio.buscarPorMail(mail);
+        
+        if (usuario !=null){
+            List<GrantedAuthority> permisos = new ArrayList<>();
+            
+            GrantedAuthority permiso = new SimpleGrantedAuthority("ROLE_USER");
+            permisos.add(permiso);
+            
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", usuario);
+            
+            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
+            return user;
+        } else {
+            return null;
+        }
+        
     }
 }
