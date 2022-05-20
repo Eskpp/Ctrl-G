@@ -5,25 +5,59 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <img src = "">
-        <div style="text-align: Right">
-            <p><i><strong> "El único presupuesto bueno es el presupuesto equilibrado"</strong></i></p>
-
-            <button> Iniciar Sesion</button
-               
-
-                <br>
-                <br>
-                <br>
-
-
-      
-            <button> Registrarte</button>
-        </div>
-        
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+      
+
+    </head>
+    <body>
+        
+        <div class= "container">
+            <div class="modal" tabindex="-1" id="modal1">
+                <div class="modal-dialog" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss='modal'>&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Ingrese su email:</strong></p>
+                            <input type="text" name="email " placeholder="Email ">
+                            <br>
+                            <p><strong>Ingrese su contraseña</strong></p>
+                            <input type="password" name="contraseña">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="primary"> Entrar </button>
+                        </div>                 
+                    </div>            
+                </div>
+            </div> 
+
+        </div>
+        <div class= "container">
+            <div class="modal" tabindex="-1" id="modal2">
+                <div class="modal-dialog" >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss='modal'>&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            cuerpo ventana emergente registrarse
+                        </div>
+                        <div class="modal-footer">
+                            <button class="primary"> enviar </button>
+                            <button class="close"> cerrar </button>
+                        </div>                 
+                    </div>            
+                </div>
+            </div> 
+
+        </div>
+        <p><i><strong> "El único presupuesto bueno es el presupuesto equilibrado"</strong></i></p>
+        <div aling="right">
+            <button id="btn-modal" class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal1">Iniciar Sesion</button>  
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal2">Registrarse</button> 
+             </div>
+       
     </body>
 </html>
