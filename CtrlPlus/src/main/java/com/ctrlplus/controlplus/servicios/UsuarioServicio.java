@@ -28,12 +28,12 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    
+
     @Transactional(propagation = Propagation.NESTED)
-    public Usuario registrar(String mail, String clave) throws ErrorServicio{
-        
+    public Usuario registrar(String mail, String clave) throws ErrorServicio {
+
         validar(mail, clave);
-        
+
         Usuario usuario = new Usuario();
         
         usuario.setMail(mail);
@@ -41,29 +41,32 @@ public class UsuarioServicio implements UserDetailsService {
         
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(claveEncriptada);
-        
+
         return usuarioRepositorio.save(usuario);
     }
-    
+
     @Transactional(propagation = Propagation.NESTED)
-    public Usuario modificar(String id, String mail, String nombre, String clave) throws ErrorServicio{
-        
+    public Usuario modificar(String id, String mail, String nombre, String clave) throws ErrorServicio {
+
         validar(mail, clave);
-        
+
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
             usuario.setMail(mail);
             usuario.setNombre(nombre);
-            usuario.setClave(clave);
+
+            String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
+            usuario.setClave(claveEncriptada);
+            
             return usuarioRepositorio.save(usuario);
         } else {
             throw new ErrorServicio("No se encontro un usuario con ese ID.");
-        }        
+        }
     }
-    
+
     @Transactional(propagation = Propagation.NESTED)
-    public void eliminar(String id) throws ErrorServicio{
+    public void eliminar(String id) throws ErrorServicio {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
@@ -72,26 +75,26 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("No se encontró un usuario con ese id.");
         }
     }
-    
-    public String conseguirNombre(String mail){
+
+    public String conseguirNombre(String mail) {
         StringTokenizer st = new StringTokenizer(mail, "@");
         return st.nextToken();
     }
-    
-    public void validar(String mail, String clave) throws ErrorServicio{
-        
+
+    public void validar(String mail, String clave) throws ErrorServicio {
+
         String emailFormate = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern p = Pattern.compile(emailFormate);
-        
-        if (mail == null || mail.trim().isEmpty()){
+
+        if (mail == null || mail.trim().isEmpty()) {
             throw new ErrorServicio("El mail no puede ser nulo");
         }
-        
+
         if (!p.matcher(mail).matches()) {
             throw new ErrorServicio("El mail no es inválido.");
-        }       
-        
-        if (clave == null || clave.trim().isEmpty()){
+        }
+
+        if (clave == null || clave.trim().isEmpty()) {
             throw new ErrorServicio("La clave no puede ser nula");
         }
         // agregar codificador de contraseña y que sea mas segura (max min)
@@ -99,24 +102,24 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        
+
         Usuario usuario = usuarioRepositorio.buscarPorMail(mail);
-        
-        if (usuario !=null){
+
+        if (usuario != null) {
             List<GrantedAuthority> permisos = new ArrayList<>();
-            
+
             GrantedAuthority permiso = new SimpleGrantedAuthority("ROLE_USER");
             permisos.add(permiso);
-            
+
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", usuario);
-            
+
             User user = new User(usuario.getMail(), usuario.getClave(), permisos);
             return user;
         } else {
             return null;
         }
-        
+
     }
 }
