@@ -19,7 +19,7 @@ public class ComprobanteServicio {
     @Autowired
     private ComprobanteRepositorio comprobanteRepositorio;
 
-    @Transactional
+    @Transactional(propagation = Propagation.NESTED)
     public Comprobante guardar(MultipartFile file) throws ErrorServicio {
 
         if (file != null) {
