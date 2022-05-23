@@ -35,10 +35,10 @@ public class UsuarioServicio implements UserDetailsService {
         validar(mail, clave);
 
         Usuario usuario = new Usuario();
-
+        
         usuario.setMail(mail);
         usuario.setNombre(conseguirNombre(mail));
-
+        
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(claveEncriptada);
 

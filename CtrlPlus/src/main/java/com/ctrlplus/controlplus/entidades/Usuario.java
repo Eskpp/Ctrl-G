@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.Data;
-
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
