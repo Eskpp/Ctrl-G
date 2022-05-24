@@ -1,5 +1,7 @@
 package com.ctrlplus.controlplus.servicios;
 
+import com.ctrlplus.controlplus.entidades.Gasto;
+import com.ctrlplus.controlplus.entidades.Ingreso;
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.UsuarioRepositorio;
@@ -119,4 +121,19 @@ public class UsuarioServicio implements UserDetailsService {
         }
         
     }
+    public Double saldoIngresos(List<Ingreso> ingresos){
+        Double sumaI = 0.0;
+        for (Ingreso ingreso : ingresos) {
+             sumaI += ingreso.getMonto();
+        }
+        return sumaI;
+    }
+    public Double saldoGastos(List<Gasto> gastos){
+        Double sumaG = 0.0;
+        for (Gasto gasto : gastos) {
+             sumaG += gasto.getMonto();
+        }
+        return sumaG;
+    }
+    
 }
