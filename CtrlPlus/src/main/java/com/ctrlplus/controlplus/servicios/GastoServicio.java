@@ -20,7 +20,7 @@ public class GastoServicio {
     private GastoRepositorio gastoRepositorio;
 
     @Transactional()
-    public Gasto agregar(Double monto, Categoria categoria, String descripcion, Comprobante foto) throws ErrorServicio {
+    public Gasto agregar(Double monto, Categoria categoria, String descripcion, Comprobante comprobante) throws ErrorServicio {
 
         validar(monto, categoria);
 
@@ -30,13 +30,13 @@ public class GastoServicio {
         gasto.setFecha(new Date());
         gasto.setCategoria(categoria);
         gasto.setDescripcion(descripcion);
-        gasto.setFoto(foto);
+        gasto.setComprobante(comprobante);
 
         return gastoRepositorio.save(gasto);
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public void modificar(String id, Double monto, Categoria categoria, String descripcion, Comprobante foto) throws ErrorServicio {
+    public void modificar(String id, Double monto, Categoria categoria, String descripcion, Comprobante comprobante) throws ErrorServicio {
 
         validar(monto, categoria);
 
@@ -47,7 +47,7 @@ public class GastoServicio {
             gasto.setFecha(new Date());
             gasto.setCategoria(categoria);
             gasto.setDescripcion(descripcion);
-            gasto.setFoto(foto);
+            gasto.setComprobante(comprobante);
 
             gastoRepositorio.save(gasto);
 

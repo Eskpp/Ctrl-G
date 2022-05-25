@@ -7,9 +7,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Data
 public class Comprobante {
 
     @Id
@@ -25,42 +27,6 @@ public class Comprobante {
     @Basic(fetch = FetchType.LAZY)
     private byte[] contenido;
 
-    public Comprobante() {
-    }
-
-    public Comprobante(String nombre, String mime, byte[] contenido) {
-        this.nombre = nombre;
-        this.mime = mime;
-        this.contenido = contenido;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getMime() {
-        return mime;
-    }
-
-    public void setMime(String mime) {
-        this.mime = mime;
-    }
-
-    public byte[] getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(byte[] contenido) {
-        this.contenido = contenido;
-    }
-
-    @Override
-    public String toString() {
-        return "Comprobante{" + "nombre=" + nombre + ", mime=" + mime + ", contenido=" + Arrays.toString(contenido) + '}';
-    }
+   
 
 }

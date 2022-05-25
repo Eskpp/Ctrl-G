@@ -28,6 +28,6 @@ public class Gasto {
     private Date fecha;
     
     @OneToOne
-    private Comprobante foto;
+    private Comprobante comprobante;
 
 }
