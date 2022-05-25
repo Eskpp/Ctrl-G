@@ -12,7 +12,9 @@ header{width: 100%;} #container{width: 80%;}
 }
 
 
-
+#botonimagen{
+  background-color: aquamarine;
+}
 
 #rec {
 
