@@ -1,14 +1,27 @@
-body {width: 100%;} #container{width: 80%;}
-header{width: 100%;} #container{width: 80%;}
+*{
+  margin: 0px;
+  padding: 0px;
+}
+/*-----------------------Style vista LOGIN-----------------------*/
 
+div#general{
+  margin: auto;
+  margin-top: 50px;
+  width: 1280px;
+  height: 800px;
+  background-color:azure;
 
+}
 
+div#divbot{
+  float:right ;
+  background-color:transparent;
+}
 
-.rectangulo {
-  width: 100px; 
-  height: 250px; 
-  border: 3px solid #555;
-  background: #428bca;
+div#imagenlogin{
+  width: 920px;
+  height: 800px;
+  background-image:url(../static/foto\ iniciologin.jpg);
 }
 
 
@@ -16,13 +29,21 @@ header{width: 100%;} #container{width: 80%;}
   background-color: aquamarine;
 }
 
-#rec {
-
-  height:min-content;
-  
 
 
-  background-color:sandybrown;
-  border-style:inset;
 
+
+/*-----------------------Final vista LOGIN-----------------------*/
+
+/*-----------------------Inicio vista Ingresos-Gastos-----------------------*/
+
+#generalingresos{
+  margin: auto;
+  margin-top: 50px;
+  width: 1280px;
+  height: 800px;
+  background-color:azure;
 }
+
+/*-----------------------Final vista Ingreos-Gastos------------------------*/
+
