@@ -2,6 +2,7 @@ package com.ctrlplus.controlplus.servicios;
 
 import com.ctrlplus.controlplus.entidades.Comprobante;
 import com.ctrlplus.controlplus.entidades.Ingreso;
+import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.IngresoRepositorio;
 import java.util.Date;
@@ -21,11 +22,10 @@ public class IngresoServicio {
     @Autowired
     private ComprobanteServicio comprobanteServicio;
 
-    Ingreso ingreso = new Ingreso();
-
     @Transactional(propagation = Propagation.NESTED)
     public Ingreso agregar(Double monto, String descripcion, MultipartFile archivo) throws ErrorServicio {
 
+        Ingreso ingreso = new Ingreso();
         ingreso.setMonto(monto);
         ingreso.setFecha(new Date());
         ingreso.setDescripcion(descripcion);
