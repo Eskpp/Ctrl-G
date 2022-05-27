@@ -36,6 +36,22 @@ div#imagenlogin{
 /*-----------------------Final vista LOGIN-----------------------*/
 
 /*-----------------------Inicio vista Ingresos-Gastos-----------------------*/
+button#botonmas{
+border-radius: 100%;
+width: 100px;
+height: 100px;
+float:left;
+position:relative;top: 375px;
+}
+
+button#botonmenos{
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+  float: right;
+  position:relative;top: 375px;
+  
+  }
 
 #generalingresos{
   margin: auto;
@@ -45,5 +61,20 @@ div#imagenlogin{
   background-color:azure;
 }
 
-/*-----------------------Final vista Ingreos-Gastos------------------------*/
+nav#nanvaringresos{
+  background-image:url(../static/nanvarrrr.jpg) ;
+
+}
+
+/*-----------------------Final vista Index------------------------*/
+
+
+
+
+
+
+
+
+
+/*-----------------------Final vista Indexs------------------------*/
 

@@ -8,7 +8,7 @@
         <link href="../static/style.css" rel="stylesheet" type="text/css">
     </head>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav id="nanvaringresos" class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               <a class="navbar-brand" href="#"><img width="50" height="50"
                 src="..\static\logo.jpg"></a>
@@ -18,14 +18,14 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    <a class="nav-link active" aria-current="page" href="#"><strong>Inicio</strong></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Mi Dinero</a>
+                    <a class="nav-link" href="#"><strong>Mi Dinero</strong></a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Mi perfil
+                      <strong>perfil</strong> 
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="#">ayuda</a></li>
@@ -41,7 +41,7 @@
                 </ul>
                 <form class="d-flex">
                   <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Buscar</button>
+                  <button class="btn btn-primary" type="submit">Buscar</button>
                 </form>
               </div>
             </div>
@@ -51,11 +51,11 @@
       <!--inicio capas-->
       
         <div id="generalingresos">
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ingresos">
-            <strong>+</strong>
+          <button  type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ingresos" id="botonmas">
+            <h1  style="font-size: 50px;"><strong>+</strong></h1> 
            </button>
-           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#gastos">
-            <strong>-</strong>
+           <button style="margin: right 50px; ;" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#gastos" id="botonmenos">
+            <h1 style="font-size: 60px;"><strong>-</strong></h1>
            </button>
 
         </div>+
