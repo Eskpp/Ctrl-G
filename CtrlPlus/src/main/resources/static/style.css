@@ -1,6 +1,80 @@
-body {width: 100%;} #container{width: 80%;}
-header{width: 100%;} #container{width: 80%;}
+*{
+  margin: 0px;
+  padding: 0px;
+}
+/*-----------------------Style vista LOGIN-----------------------*/
+
+div#general{
+  margin: auto;
+  margin-top: 50px;
+  width: 1280px;
+  height: 800px;
+  background-color:azure;
+
+}
+
+div#divbot{
+  float:right ;
+  background-color:transparent;
+}
+
+div#imagenlogin{
+  width: 920px;
+  height: 800px;
+  background-image:url(../static/foto\ iniciologin.jpg);
+}
+
+
+#botonimagen{
+  background-color: aquamarine;
+}
 
 
 
+
+
+/*-----------------------Final vista LOGIN-----------------------*/
+
+/*-----------------------Inicio vista Ingresos-Gastos-----------------------*/
+button#botonmas{
+border-radius: 100%;
+width: 100px;
+height: 100px;
+float:left;
+position:relative;top: 375px;
+}
+
+button#botonmenos{
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+  float: right;
+  position:relative;top: 375px;
+  
+  }
+
+#generalingresos{
+  margin: auto;
+  margin-top: 50px;
+  width: 1280px;
+  height: 800px;
+  background-color:azure;
+}
+
+nav#nanvaringresos{
+  background-image:url(../static/nanvarrrr.jpg) ;
+
+}
+
+/*-----------------------Final vista Index------------------------*/
+
+
+
+
+
+
+
+
+
+/*-----------------------Final vista Indexs------------------------*/
 
