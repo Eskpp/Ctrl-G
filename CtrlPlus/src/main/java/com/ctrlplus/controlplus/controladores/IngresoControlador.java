@@ -1,11 +1,15 @@
 package com.ctrlplus.controlplus.controladores;
 
+import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.IngresoServicio;
+import com.ctrlplus.controlplus.servicios.UsuarioServicio;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +19,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_USER')")
 @RequestMapping("/")
 public class IngresoControlador {
 
     @Autowired
     private IngresoServicio ingresoServicio;
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
     @PostMapping
-    public String ingresar(ModelMap modelo, @RequestParam() Double monto, @RequestParam(required = false) String descripcion, @RequestParam(required = false) MultipartFile archivo) {
-        try {
-            ingresoServicio.agregar(monto, descripcion, archivo);
+    public String ingresar(ModelMap modelo,
+            HttpSession session,
+            @RequestParam() Double monto,
+            @RequestParam(required = false) String descripcion,
+            @RequestParam(required = false) MultipartFile archivo) {
 
+        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+        if (logeado == null) {
+            return "index";
+        }
+        try {
+            usuarioServicio.agregarIngreso(logeado,ingresoServicio.agregar(monto, descripcion, archivo));
+            //preguntar a pilar si esta buena esta forma de vincular usuario con ingreso/registro
+            //o si hacerlo en el servicio del ingreso
             return "index";
         } catch (ErrorServicio e) {
 
@@ -39,7 +56,11 @@ public class IngresoControlador {
     }
 
     @PostMapping
-    public String modificar(ModelMap modelo, @RequestParam() Double monto, @RequestParam(required = false) String descripcion, @RequestParam(required = false) MultipartFile archivo, @RequestParam() String id) {
+    public String modificar(ModelMap modelo,
+            @RequestParam() Double monto,
+            @RequestParam(required = false) String descripcion,
+            @RequestParam(required = false) MultipartFile archivo,
+            @RequestParam() String id) {
         try {
 
             ingresoServicio.modificar(id, monto, descripcion, archivo);

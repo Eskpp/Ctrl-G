@@ -151,4 +151,8 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
     
+    public void agregarIngreso(Usuario usuario, Ingreso ingreso){
+        usuario.getIngresos().add(ingreso);
+    }
+    
 }
