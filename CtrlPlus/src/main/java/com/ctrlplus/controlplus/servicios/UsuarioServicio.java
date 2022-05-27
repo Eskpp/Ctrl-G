@@ -48,7 +48,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public Usuario modificar(String id, String mail, String nombre, String clave) throws ErrorServicio {
+    public Usuario modificar(String id, String mail, String nombre, String clave, String clave2) throws ErrorServicio {
 
         validar(mail, clave);
 
@@ -137,6 +137,18 @@ public class UsuarioServicio implements UserDetailsService {
              sumaG += gasto.getMonto();
         }
         return sumaG;
+    }
+    
+    public Usuario buscarPorID(String id) throws ErrorServicio{
+        Optional<Usuario> respuesta= usuarioRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Usuario usuario= respuesta.get();
+            return usuario;
+        }else{
+            throw new ErrorServicio("No se encontro un Usuario con ese ID");
+        }
+      
+
     }
     
 }
