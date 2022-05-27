@@ -3,6 +3,8 @@ package com.ctrlplus.controlplus.controladores;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.IngresoServicio;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -57,8 +59,22 @@ public class IngresoControlador {
 
     @GetMapping
     public String listar(ModelMap modelo) {
-        ingresoServicio.listar(); 
+        ingresoServicio.listar();
         return "index";// devolver donde se vea
     }
 
+    @PostMapping
+    public String eliminar(ModelMap modelo, @RequestParam String id) {
+
+        try {
+            ingresoServicio.eliminar(id);
+            return "index";
+        } catch (ErrorServicio ex) {
+
+            modelo.addAttribute("error", ex.getMessage());
+
+            return "index";
+        }
+
+    }
 }
