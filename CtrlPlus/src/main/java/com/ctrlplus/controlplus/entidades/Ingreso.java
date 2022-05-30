@@ -26,6 +26,6 @@ public class Ingreso {
     private Date fecha;
     
     @OneToOne
-    private Comprobante foto;
+    private Comprobante comprobante;
 
 }

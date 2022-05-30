@@ -1,5 +1,7 @@
 package com.ctrlplus.controlplus.servicios;
 
+import com.ctrlplus.controlplus.entidades.Gasto;
+import com.ctrlplus.controlplus.entidades.Ingreso;
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.UsuarioRepositorio;
@@ -46,7 +48,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public Usuario modificar(String id, String mail, String nombre, String clave) throws ErrorServicio {
+    public Usuario modificar(String id, String mail, String nombre, String clave, String clave2) throws ErrorServicio {
 
         validar(mail, clave);
 
@@ -122,4 +124,35 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
     }
+    public Double saldoIngresos(List<Ingreso> ingresos){
+        Double sumaI = 0.0;
+        for (Ingreso ingreso : ingresos) {
+             sumaI += ingreso.getMonto();
+        }
+        return sumaI;
+    }
+    public Double saldoGastos(List<Gasto> gastos){
+        Double sumaG = 0.0;
+        for (Gasto gasto : gastos) {
+             sumaG += gasto.getMonto();
+        }
+        return sumaG;
+    }
+    
+    public Usuario buscarPorID(String id) throws ErrorServicio{
+        Optional<Usuario> respuesta= usuarioRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Usuario usuario= respuesta.get();
+            return usuario;
+        }else{
+            throw new ErrorServicio("No se encontro un Usuario con ese ID");
+        }
+      
+
+    }
+    
+    public void agregarIngreso(Usuario usuario, Ingreso ingreso){
+        usuario.getIngresos().add(ingreso);
+    }
+    
 }

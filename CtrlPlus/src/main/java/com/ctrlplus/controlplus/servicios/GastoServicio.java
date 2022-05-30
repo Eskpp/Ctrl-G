@@ -12,15 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class GastoServicio {
 
     @Autowired
     private GastoRepositorio gastoRepositorio;
+    @Autowired
+    private ComprobanteServicio comprobanteServicio;
 
     @Transactional()
-    public Gasto agregar(Double monto, Categoria categoria, String descripcion, Comprobante foto) throws ErrorServicio {
+    public Gasto agregar(Double monto, Categoria categoria, String descripcion, MultipartFile archivo) throws ErrorServicio {
 
         validar(monto, categoria);
 
@@ -30,13 +33,16 @@ public class GastoServicio {
         gasto.setFecha(new Date());
         gasto.setCategoria(categoria);
         gasto.setDescripcion(descripcion);
-        gasto.setFoto(foto);
+       if (archivo != null ) {
+                Comprobante comprobante = comprobanteServicio.guardar(archivo);
+                gasto.setComprobante(comprobante);
+            }
 
         return gastoRepositorio.save(gasto);
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public void modificar(String id, Double monto, Categoria categoria, String descripcion, Comprobante foto) throws ErrorServicio {
+    public void modificar(String id, Double monto, Categoria categoria, String descripcion, MultipartFile archivo) throws ErrorServicio {
 
         validar(monto, categoria);
 
@@ -47,7 +53,10 @@ public class GastoServicio {
             gasto.setFecha(new Date());
             gasto.setCategoria(categoria);
             gasto.setDescripcion(descripcion);
-            gasto.setFoto(foto);
+           if (archivo != null ) {
+                Comprobante comprobante = comprobanteServicio.guardar(archivo);
+                gasto.setComprobante(comprobante);
+            }
 
             gastoRepositorio.save(gasto);
 

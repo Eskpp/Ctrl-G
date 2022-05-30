@@ -2,6 +2,7 @@ package com.ctrlplus.controlplus.servicios;
 
 import com.ctrlplus.controlplus.entidades.Comprobante;
 import com.ctrlplus.controlplus.entidades.Ingreso;
+import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.IngresoRepositorio;
 import java.util.Date;
@@ -11,28 +12,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class IngresoServicio {
 
     @Autowired
     private IngresoRepositorio ingresoRepositorio;
-
-    Ingreso ingreso = new Ingreso();
+    @Autowired
+    private ComprobanteServicio comprobanteServicio;
 
     @Transactional(propagation = Propagation.NESTED)
-    public Ingreso agregar(Double monto, String descripcion, Comprobante foto) {
+    public Ingreso agregar(Double monto, String descripcion, MultipartFile archivo) throws ErrorServicio {
 
+        Ingreso ingreso = new Ingreso();
         ingreso.setMonto(monto);
         ingreso.setFecha(new Date());
         ingreso.setDescripcion(descripcion);
-        ingreso.setFoto(foto);
+       if (archivo != null ) {
+                Comprobante comprobante = comprobanteServicio.guardar(archivo);
+                ingreso.setComprobante(comprobante);
+            }
 
         return ingresoRepositorio.save(ingreso);
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public void modificar(String id, Double monto, String descripcion, Comprobante foto) throws ErrorServicio {
+    public void modificar(String id, Double monto, String descripcion, MultipartFile archivo) throws ErrorServicio {
 
         validar(monto);
 
@@ -42,7 +48,11 @@ public class IngresoServicio {
             ingreso.setMonto(monto);
             ingreso.setFecha(new Date());
             ingreso.setDescripcion(descripcion);
-            ingreso.setFoto(foto);
+            if (archivo != null ) {
+                Comprobante comprobante = comprobanteServicio.guardar(archivo);
+                ingreso.setComprobante(comprobante);
+            }
+            
             ingresoRepositorio.save(ingreso);
 
         } else {
@@ -66,8 +76,7 @@ public class IngresoServicio {
     public List<Ingreso> listar() {
         return (List<Ingreso>) ingresoRepositorio.findAll();
     }
-    
-    
+
     public void validar(Double monto) throws ErrorServicio {
         if (monto == null || monto.toString().isEmpty()) {
             throw new ErrorServicio("Debe ingresar un importe.");
