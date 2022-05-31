@@ -155,4 +155,8 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.getIngresos().add(ingreso);
     }
     
+    public void agregarGasto (Usuario usuario, Gasto gasto){
+        usuario.getGastos().add(gasto);
+    }
+    
 }
