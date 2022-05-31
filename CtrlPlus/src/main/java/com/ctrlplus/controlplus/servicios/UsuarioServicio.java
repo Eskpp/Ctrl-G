@@ -32,15 +32,15 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional(propagation = Propagation.NESTED)
-    public Usuario registrar(String mail, String clave) throws ErrorServicio {
+    public Usuario registrar(String mail, String clave, String clave2) throws ErrorServicio {
 
-        validar(mail, clave);
+        validar(mail, clave, clave2);
 
         Usuario usuario = new Usuario();
-        
+
         usuario.setMail(mail);
         usuario.setNombre(conseguirNombre(mail));
-        
+
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(claveEncriptada);
 
@@ -50,7 +50,7 @@ public class UsuarioServicio implements UserDetailsService {
     @Transactional(propagation = Propagation.NESTED)
     public Usuario modificar(String id, String mail, String nombre, String clave, String clave2) throws ErrorServicio {
 
-        validar(mail, clave);
+        validar(mail, clave, clave2);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -60,7 +60,7 @@ public class UsuarioServicio implements UserDetailsService {
 
             String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
             usuario.setClave(claveEncriptada);
-            
+
             return usuarioRepositorio.save(usuario);
         } else {
             throw new ErrorServicio("No se encontro un usuario con ese ID.");
@@ -83,13 +83,15 @@ public class UsuarioServicio implements UserDetailsService {
         return st.nextToken();
     }
 
-    public void validar(String mail, String clave) throws ErrorServicio {
+    public void validar(String mail, String clave, String clave2) throws ErrorServicio {
 
         String emailFormate = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern p = Pattern.compile(emailFormate);
-
+        String claveSegura = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        Pattern c = Pattern.compile(claveSegura);
+        
         if (mail == null || mail.trim().isEmpty()) {
-            throw new ErrorServicio("El mail no puede ser nulo");
+            throw new ErrorServicio("El mail no puede ser nulo.");
         }
 
         if (!p.matcher(mail).matches()) {
@@ -97,9 +99,18 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
         if (clave == null || clave.trim().isEmpty()) {
-            throw new ErrorServicio("La clave no puede ser nula");
+            throw new ErrorServicio("La clave no puede ser nula.");
         }
-        // agregar codificador de contraseña y que sea mas segura (max min)
+        
+        if (!c.matcher(clave).matches()) {
+            throw new ErrorServicio("La clave debe contener al menos 8 caracteres, una mayúscula, "
+                    + "una minúscula, un número y un carácter especial.");
+        }
+
+        if (!clave.equals(clave2)) {
+            throw new ErrorServicio("Las claves deben ser iguales.");
+        }
+
     }
 
     @Override
@@ -124,39 +135,40 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
     }
-    public Double saldoIngresos(List<Ingreso> ingresos){
+
+    public Double saldoIngresos(List<Ingreso> ingresos) {
         Double sumaI = 0.0;
         for (Ingreso ingreso : ingresos) {
-             sumaI += ingreso.getMonto();
+            sumaI += ingreso.getMonto();
         }
         return sumaI;
     }
-    public Double saldoGastos(List<Gasto> gastos){
+
+    public Double saldoGastos(List<Gasto> gastos) {
         Double sumaG = 0.0;
         for (Gasto gasto : gastos) {
-             sumaG += gasto.getMonto();
+            sumaG += gasto.getMonto();
         }
         return sumaG;
     }
-    
-    public Usuario buscarPorID(String id) throws ErrorServicio{
-        Optional<Usuario> respuesta= usuarioRepositorio.findById(id);
+
+    public Usuario buscarPorID(String id) throws ErrorServicio {
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
-            Usuario usuario= respuesta.get();
+            Usuario usuario = respuesta.get();
             return usuario;
-        }else{
+        } else {
             throw new ErrorServicio("No se encontro un Usuario con ese ID");
         }
-      
 
     }
-    
-    public void agregarIngreso(Usuario usuario, Ingreso ingreso){
+
+    public void agregarIngreso(Usuario usuario, Ingreso ingreso) {
         usuario.getIngresos().add(ingreso);
     }
-    
-    public void agregarGasto (Usuario usuario, Gasto gasto){
+
+    public void agregarGasto(Usuario usuario, Gasto gasto) {
         usuario.getGastos().add(gasto);
     }
-    
+
 }

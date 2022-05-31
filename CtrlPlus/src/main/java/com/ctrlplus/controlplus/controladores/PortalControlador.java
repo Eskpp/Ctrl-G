@@ -2,8 +2,6 @@ package com.ctrlplus.controlplus.controladores;
 
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -41,10 +39,11 @@ public class PortalControlador {
     @PostMapping("/registro")
     public String registro(ModelMap modelo,
             @RequestParam String mail,
-            @RequestParam String clave) {
+            @RequestParam String clave,
+            @RequestParam String clave2) {
         try {
-            usuarioServicio.registrar(mail, clave);
-            return "/inicio"; //googlear como logear al usuario con el registro
+            usuarioServicio.registrar(mail, clave, clave2);
+            return "/inicio";                                      //googlear como logear al usuario con el registro
         } catch (ErrorServicio ex) {
             modelo.addAttribute("error", ex.getMessage());
             modelo.addAttribute("mail", mail);
