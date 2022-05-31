@@ -48,13 +48,28 @@ public class UsuarioControlador {
             @RequestParam String clave2) {
         try {
             usuarioServicio.modificar(id, mail, nombre, clave, clave2);
+            return "index";
         } catch (ErrorServicio ex) {
             modelo.addAttribute("error", ex.getMessage());
             modelo.addAttribute("id", id);
             modelo.addAttribute("nombre", nombre);
             modelo.addAttribute("mail", mail);
+            return "index";
+        }  
+    }
+    
+    @PostMapping()
+    public String eliminar(ModelMap modelo,
+            @RequestParam String id){
+        try {
+            usuarioServicio.eliminar(id);
+            return "redirect:/logout";
+                                                                      //ver que hacer con la session, de momento redirecciona a logout
+        } catch (ErrorServicio ex) {
+            modelo.addAttribute("error", ex.getMessage());
+            modelo.addAttribute("id", id);
+            return "index";
         }
-        return "index";
     }
 
 }
