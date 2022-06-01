@@ -22,7 +22,7 @@ public class GastoServicio {
     @Autowired
     private ComprobanteServicio comprobanteServicio;
 
-    @Transactional()
+    @Transactional() //agregar metodo agregarGasto proveniente de UsuarioServicio
     public Gasto agregar(Double monto, Categoria categoria, String descripcion, MultipartFile archivo) throws ErrorServicio {
 
         validar(monto, categoria);
@@ -40,6 +40,7 @@ public class GastoServicio {
 
         return gastoRepositorio.save(gasto);
     }
+    
 
     @Transactional(propagation = Propagation.NESTED)
     public void modificar(String id, Double monto, Categoria categoria, String descripcion, MultipartFile archivo) throws ErrorServicio {

@@ -4,9 +4,6 @@ import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.IngresoServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,6 +40,7 @@ public class IngresoControlador {
             usuarioServicio.agregarIngreso(logeado,ingresoServicio.agregar(monto, descripcion, archivo));
             //preguntar a pilar si esta buena esta forma de vincular usuario con ingreso/registro
             //o si hacerlo en el servicio del ingreso
+            //testear metodo de vinculacion y avisar
             return "index";
         } catch (ErrorServicio e) {
 
@@ -51,6 +49,7 @@ public class IngresoControlador {
             if (descripcion != null) {
                 modelo.addAttribute("descripcion", descripcion);
             }
+            //como devolver una foto por modelo, asi el usuario no tiene que resubirla
             return "index";
         }
     }
