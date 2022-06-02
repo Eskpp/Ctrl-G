@@ -84,4 +84,14 @@ public class IngresoServicio {
         }
 
     }
+     public Ingreso buscarPorID(String id) throws ErrorServicio {
+        Optional<Ingreso> respuesta = ingresoRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Ingreso ingreso = respuesta.get();
+            return ingreso;
+        } else {
+            throw new ErrorServicio("No se encontro un Ingreso con ese ID");
+        }
+
+    }
 }

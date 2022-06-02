@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/gasto")
 public class GastoControlador {
 
     @Autowired
@@ -24,7 +24,7 @@ public class GastoControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @PostMapping
+    @PostMapping("/ingresar")
     public String ingresar(ModelMap modelo,
             HttpSession session,
             @RequestParam() Double monto,
@@ -55,7 +55,7 @@ public class GastoControlador {
         }
     }
 
-    @PostMapping
+    @PostMapping("/modificar")
     public String modificar(ModelMap modelo, @RequestParam() Double monto, @RequestParam(required = false) String descripcion, @RequestParam(required = false) MultipartFile archivo, @RequestParam() String id, @RequestParam Categoria categoria) {
         try {
 
@@ -77,13 +77,14 @@ public class GastoControlador {
 
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public String listar(ModelMap modelo) {
-        gastoServicio.listar();
-        return "index";// devolver donde se vea
+        
+        modelo.addAttribute("gastos", gastoServicio.listar());
+        return "gastos";// devolver donde se vea
     }
 
-    @PostMapping
+    @PostMapping("/eliminar")
     public String eliminar(ModelMap modelo, @RequestParam String id) {
 
         try {
