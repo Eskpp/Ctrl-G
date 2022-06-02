@@ -5,7 +5,7 @@
 /*-----------------------Style vista LOGIN-----------------------*/
 
 nav#nanvarlogin{
-  background-image:url(../static/nanvarrrr.jpg) ;
+  background-image:url(../static/imagenes/nanvarrrr.jpg) ;
 
 }
 
@@ -26,7 +26,7 @@ div#divbot{
 div#imagenlogin{
   width: 920px;
   height: 800px;
-  background-image:url(../static/foto\ iniciologin.jpg);
+  background-image:url(../static/imagenes/iniciologin.jpg);
 }
 
 
@@ -78,7 +78,7 @@ button#botonmenos{
 }
 
 nav#nanvaringresos{
-  background-image:url(../static/nanvarrrr.jpg) ;
+  background-image:url(/static/imagenes/nanvarrrr.jpg) ;
 
 }
 
