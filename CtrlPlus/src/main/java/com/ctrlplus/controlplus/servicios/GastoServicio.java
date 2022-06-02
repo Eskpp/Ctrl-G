@@ -93,4 +93,14 @@ public class GastoServicio {
             throw new ErrorServicio("Debe seleccionar una Categoría.");
         }
     }
+     public Gasto buscarPorID(String id) throws ErrorServicio {
+        Optional<Gasto> respuesta = gastoRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Gasto gasto = respuesta.get();
+            return gasto;
+        } else {
+            throw new ErrorServicio("No se encontro un Gasto con ese ID");
+        }
+
+    }
 }
