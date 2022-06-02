@@ -57,109 +57,32 @@
           </nav>
     </header>
     <body>
+     
+      <table class="table table-success">
+        
+        <thead >
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Comprobante</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="ingreso:${ingresos}">
+            <td th:text="${ingreso.fecha}"></td>
+            <td th:text="${ingreso.monto}"></td>
+            <td th:text="${ingreso.descripcion}"></td>
+            <td ><img th:if="${ingreso.comprobante != null}" th:src="${'/comprobante/ingreso/' + ingreso.id}"></td>
+            <td><a href="/ingreso/modificar" class="btn btn-primary" role="button">Modificar</a></td>
+            <td><form th:action="@{/ingreso/eliminar}" method="post" ></form></td>
+          </tr>
+        </tbody>
+      </table>
       
-      <!--inicio capas-->
-      
-        <div id="generalingresos">
-          <div id="generalingresoss">
-            <h1 style="text-align: center;"><strong>Tu saldo <br> actual es:</strong></h1>
-            <h1 style="text-align: center;"><strong><i>$5000</i></strong></h1>
-          <button  type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ingresos" id="botonmas">
-            <h1  style="font-size: 50px;"><strong>+</strong></h1> 
-           </button>
-           <button style="margin: right 50px; ;" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#gastos" id="botonmenos">
-            <h1 style="font-size: 60px;"><strong>-</strong></h1>
-           </button>
-          </div>
-      </div>
 
-      
-      <!--Fin capas -->
-
-
-    <!--inicio MODALS-->  
-
-
-  
-    <!-- The Modal -->
-     <div class="modal" id="ingresos">
-     <div class="modal-dialog">
-     <div class="modal-content">
-  
-    <!-- Modal Header -->
-     <div class="modal-header">
-          <h4 class="modal-title"><strong>Ingresos</strong></h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-  
-    <!-- Modal body -->
-     <div class="modal-body">
-
-            <p>Monto:</p>
-            <input type="number" class="form-control" placeholder="Ingrese su dinero">
-            <br>
-            <p>Descripcion:</p>
-            <input type="text" class="form-control" placeholder="Descripcion" required minlength="0" maxlength="100">
-            <br>
-            <p>Ingrese comprobante:</p>
-            <form  name="subida-imagenes" type="POST" enctype="multipart/formdata" >
-                <input type="file" name="imagen" />
-            </form>
-            
-  
-      </div>
-  
-    <!-- Modal footer -->
-      <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar Ingreso</button>
-      </div>
-  
-      </div>
-      </div>
-      </div>
-
-  
-  <!-- The Moda2 -->
-     <div class="modal" id="gastos">
-     <div class="modal-dialog">
-     <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title"><strong>Gastos</strong></h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-            <p>Monto:</p>
-            <input type="number" class="form-control" placeholder="Ingrese su gasto">
-            <br>
-            <p>Descripcion:</p>
-            <input type="text" class="form-control" placeholder="Descripcion" required minlength="0" maxlength="100">
-            <ul th:each="categoría:${categorias}">
-                <li th:text="${categoría.getnombre}" th:value="${categoria.get.value}">
-                </li>
-            </ul>      
-                
-              
-
-            <br>
-            <p>Ingrese comprobante:</p>
-            <form  name="subida-imagenes" type="POST" enctype="multipart/formdata" >
-                <input type="file" name="imagen" />
-                </form>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar Gasto</button>
-        </div>
-  
-      </div>
-    </div>
-  </div>
- 
 
 
 
