@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_USER')")
-@RequestMapping("/")
+@RequestMapping("/ingreso")
 public class IngresoControlador {
 
     @Autowired
@@ -25,7 +25,7 @@ public class IngresoControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @PostMapping
+    @PostMapping("/ingresar")
     public String ingresar(ModelMap modelo,
             HttpSession session,
             @RequestParam() Double monto,
@@ -54,7 +54,7 @@ public class IngresoControlador {
         }
     }
 
-    @PostMapping
+    @PostMapping("/modificar")
     public String modificar(ModelMap modelo,
             @RequestParam() Double monto,
             @RequestParam(required = false) String descripcion,
@@ -77,13 +77,13 @@ public class IngresoControlador {
 
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public String listar(ModelMap modelo) {
-        ingresoServicio.listar();
-        return "index";// devolver donde se vea
+        modelo.addAttribute("ingresos", ingresoServicio.listar());
+        return "ingresos";
     }
 
-    @PostMapping
+    @PostMapping("/eliminar")
     public String eliminar(ModelMap modelo, @RequestParam String id) {
 
         try {

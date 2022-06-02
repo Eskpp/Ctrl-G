@@ -20,12 +20,12 @@ public class UsuarioControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @GetMapping()
+    @GetMapping("/perfil")
     public String verPerfil(){
         return "perfil";
     }
     
-    @GetMapping()
+    @GetMapping("/editar")
     public String editarU(@RequestParam String id, ModelMap modelo) {
 
         try {
@@ -39,7 +39,7 @@ public class UsuarioControlador {
         return "index";
     }
 
-    @PostMapping()
+    @PostMapping("/editar")
     public String editarU(ModelMap modelo,
             @RequestParam String id,
             @RequestParam String nombre,
@@ -58,7 +58,7 @@ public class UsuarioControlador {
         }  
     }
     
-    @PostMapping()
+    @PostMapping("/eliminar")
     public String eliminar(ModelMap modelo,
             @RequestParam String id){
         try {
