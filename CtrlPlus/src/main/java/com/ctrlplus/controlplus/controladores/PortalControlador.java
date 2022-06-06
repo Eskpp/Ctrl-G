@@ -39,14 +39,16 @@ public class PortalControlador {
     @PostMapping("/registro")
     public String registro(ModelMap modelo,
             @RequestParam String mail,
+            @RequestParam String nombre,
             @RequestParam String clave,
             @RequestParam String clave2) {
         try {
-            usuarioServicio.registrar(mail, clave, clave2);
-            return "/inicio";                                      //googlear como logear al usuario con el registro
+            usuarioServicio.registrar(mail, nombre, clave, clave2);
+            return "index";                                      //googlear como logear al usuario con el registro
         } catch (ErrorServicio ex) {
             modelo.addAttribute("error", ex.getMessage());
             modelo.addAttribute("mail", mail);
+            modelo.addAttribute("nombre", nombre);
             return "/login";
         }
     }
