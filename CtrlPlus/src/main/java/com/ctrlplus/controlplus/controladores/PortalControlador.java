@@ -52,6 +52,7 @@ public class PortalControlador {
             return "/login";
         }
     }
+      
     
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/inicio")
