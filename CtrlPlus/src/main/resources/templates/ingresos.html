@@ -7,57 +7,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/css/style.css" rel="stylesheet" type="text/css">
     </head>
-    <header>
-        <nav id="nanvaringresos" class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#"><img width="50" height="50"
-                src="\img\logo.jpg"></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"><strong>Inicio</strong></a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <strong>Mi Dinero</strong> 
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">Ingresos</a></li>
-                      <li><a class="dropdown-item" href="#">Gastos</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <strong>Perfil</strong> 
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">ayuda</a></li>
-                      <li><a class="dropdown-item" href="#">privacidad</a></li>
-                      <li><a class="dropdown-item" href="#">configuracion</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"><strong>Informes</strong></a>
-                  </li>
-                  <li class="nav-item"> 
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><strong><i>CtrlG+</i></strong></a>
-                  </li>
-                </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                  <button class="btn btn-primary" type="submit">Buscar</button>
-                </form>
-              </div>
-            </div>
-          </nav>
-    </header>
+    <header></header>
+   
     <body>
-     
+      <div th:replace=" ingreso :: navbar"></div>
+      
       <table class="table table-success">
         
         <thead >
@@ -77,7 +31,7 @@
             <td th:text="${ingreso.descripcion}"></td>
             <td ><img th:if="${ingreso.comprobante != null}" th:src="${'/comprobante/ingreso/' + ingreso.id}"></td>
             <td><a href="/ingreso/modificar" class="btn btn-primary" role="button">Modificar</a></td>
-            <td><form th:action="@{/ingreso/eliminar}" method="post" ></form></td>
+            <td><a href="/ingreso/eliminar"  class="btn btn-danger" th:action="@{/ingreso/eliminar}" method="post" role="button" >Eliminar</a>
           </tr>
         </tbody>
       </table>
