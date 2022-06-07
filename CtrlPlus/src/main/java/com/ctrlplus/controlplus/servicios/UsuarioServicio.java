@@ -32,14 +32,14 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional(propagation = Propagation.NESTED)
-    public Usuario registrar(String mail, String clave, String clave2) throws ErrorServicio {
+    public Usuario registrar(String mail, String nombre, String clave, String clave2) throws ErrorServicio {
 
-        validar(mail, clave, clave2);
+        validar(mail, nombre, clave, clave2);
 
         Usuario usuario = new Usuario();
 
         usuario.setMail(mail);
-        usuario.setNombre(conseguirNombre(mail));
+        usuario.setNombre(nombre);
 
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(claveEncriptada);
@@ -50,7 +50,7 @@ public class UsuarioServicio implements UserDetailsService {
     @Transactional(propagation = Propagation.NESTED)
     public Usuario modificar(String id, String mail, String nombre, String clave, String clave2) throws ErrorServicio {
 
-        validar(mail, clave, clave2);
+        validar(mail, nombre, clave, clave2);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -83,15 +83,23 @@ public class UsuarioServicio implements UserDetailsService {
         return st.nextToken();
     }
 
-    public void validar(String mail, String clave, String clave2) throws ErrorServicio {
+    public void validar(String mail, String nombre, String clave, String clave2) throws ErrorServicio {
 
         String emailFormate = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern p = Pattern.compile(emailFormate);
         String claveSegura = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
         Pattern c = Pattern.compile(claveSegura);
-        
+
         if (mail == null || mail.trim().isEmpty()) {
             throw new ErrorServicio("El mail no puede ser nulo.");
+        }
+
+        if (usuarioRepositorio.buscarPorMail(mail) != null){
+            throw new ErrorServicio("Ya existe un usuario con ese mail.");
+        }
+
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ErrorServicio("El nombre no puede ser nulo.");
         }
 
         if (!p.matcher(mail).matches()) {
@@ -101,7 +109,7 @@ public class UsuarioServicio implements UserDetailsService {
         if (clave == null || clave.trim().isEmpty()) {
             throw new ErrorServicio("La clave no puede ser nula.");
         }
-        
+
         if (!c.matcher(clave).matches()) {
             throw new ErrorServicio("La clave debe contener al menos 8 caracteres, una mayúscula, "
                     + "una minúscula, un número y un carácter especial.");
