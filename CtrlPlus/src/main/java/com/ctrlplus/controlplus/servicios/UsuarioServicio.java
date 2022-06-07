@@ -89,15 +89,15 @@ public class UsuarioServicio implements UserDetailsService {
         Pattern p = Pattern.compile(emailFormate);
         String claveSegura = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
         Pattern c = Pattern.compile(claveSegura);
-        
+
         if (mail == null || mail.trim().isEmpty()) {
             throw new ErrorServicio("El mail no puede ser nulo.");
         }
-        
-        if (usuarioRepositorio.buscarPorMail(mail).getMail().equals(mail)) {
+
+        if (usuarioRepositorio.buscarPorMail(mail) != null){
             throw new ErrorServicio("Ya existe un usuario con ese mail.");
         }
-        
+
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new ErrorServicio("El nombre no puede ser nulo.");
         }
@@ -109,7 +109,7 @@ public class UsuarioServicio implements UserDetailsService {
         if (clave == null || clave.trim().isEmpty()) {
             throw new ErrorServicio("La clave no puede ser nula.");
         }
-        
+
         if (!c.matcher(clave).matches()) {
             throw new ErrorServicio("La clave debe contener al menos 8 caracteres, una mayúscula, "
                     + "una minúscula, un número y un carácter especial.");
