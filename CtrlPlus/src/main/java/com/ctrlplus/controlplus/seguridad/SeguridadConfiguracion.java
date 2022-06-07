@@ -37,7 +37,7 @@ public class SeguridadConfiguracion extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/logincheck")
                 .usernameParameter("mail")
                 .passwordParameter("clave")
-                .defaultSuccessUrl("/") //ver si lleva al index o a otra vista de inicio
+                .defaultSuccessUrl("/inicio") //ver si lleva al index o a otra vista de inicio
                 .permitAll()
                 .and().logout()
                 .logoutUrl("/logout")

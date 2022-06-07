@@ -44,7 +44,7 @@ public class PortalControlador {
             @RequestParam String clave2) {
         try {
             usuarioServicio.registrar(mail, nombre, clave, clave2);
-            return "index";                                      //googlear como logear al usuario con el registro
+            return "/inicio";                                      //googlear como logear al usuario con el registro
         } catch (ErrorServicio ex) {
             modelo.addAttribute("error", ex.getMessage());
             modelo.addAttribute("mail", mail);
