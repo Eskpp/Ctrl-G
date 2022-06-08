@@ -34,7 +34,7 @@ public class GastoControlador {
 
         Usuario logeado = (Usuario)session.getAttribute("usuariosession");
         if (logeado == null) {
-            return "index";
+            return "login";
         }  try {
             usuarioServicio.agregarGasto(logeado, gastoServicio.agregar(monto, categoria, descripcion, archivo));
             //preguntar a pilar si esta buena esta forma de vincular usuario con ingreso/registro

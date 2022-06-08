@@ -1,5 +1,6 @@
 package com.ctrlplus.controlplus.controladores;
 
+import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,8 @@ public class PortalControlador {
     
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/inicio")
-    public String inicio(){
+    public String inicio(ModelMap modelo){
+        modelo.addAttribute("categorias", Categoria.values());
         return "index";
     }
 
