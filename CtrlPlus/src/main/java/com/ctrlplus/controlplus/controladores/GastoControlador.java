@@ -37,7 +37,7 @@ public class GastoControlador {
             return "login";
         }  try {
             usuarioServicio.agregarGasto(logeado, gastoServicio.agregar(monto, categoria, descripcion, archivo));
-            //preguntar a pilar si esta buena esta forma de vincular usuario con ingreso/registro
+            //preguntar a pili♥ si esta buena esta forma de vincular usuario con ingreso/registro
             //o si hacerlo en el servicio del ingreso
             return "index";
         } catch (ErrorServicio e) {

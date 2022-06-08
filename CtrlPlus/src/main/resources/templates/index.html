@@ -168,7 +168,7 @@
                             <p>Categorias:</p>
                             <br>
                             <select class="form-control" name="categoria">
-                                <option th:each="categoria : ${categorias}" th:text="${categoria}" th:value="${categoria}"></option>
+                                <option th:each="categoria : ${categorias}" th:text="${categoria.nombre}" th:value="${categoria}"></option>
                             </select>
                             <br>
                             <p>Ingrese comprobante:</p>
