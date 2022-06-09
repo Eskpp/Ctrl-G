@@ -1,5 +1,6 @@
 package com.ctrlplus.controlplus.entidades;
 
+import com.ctrlplus.controlplus.enums.Rol;
 import javax.persistence.Entity;
 import java.util.List;
 import javax.persistence.Column;
@@ -30,5 +31,7 @@ public class Usuario {
     private List<Gasto> gastos;
     @OneToMany
     private List<Ingreso> ingresos;
+    
+    private Rol rol;
 
 }

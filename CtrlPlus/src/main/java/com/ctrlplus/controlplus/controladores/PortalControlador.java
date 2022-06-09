@@ -1,5 +1,6 @@
 package com.ctrlplus.controlplus.controladores;
 
+import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class PortalControlador {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "login";
     }
 
     @GetMapping("/login")
@@ -39,22 +40,26 @@ public class PortalControlador {
     @PostMapping("/registro")
     public String registro(ModelMap modelo,
             @RequestParam String mail,
+            @RequestParam String nombre,
             @RequestParam String clave,
             @RequestParam String clave2) {
         try {
-            usuarioServicio.registrar(mail, clave, clave2);
-            return "/inicio";                                      //googlear como logear al usuario con el registro
+            usuarioServicio.registrar(mail, nombre, clave, clave2);
+            return "/login";                                      //googlear como logear al usuario con el registro
         } catch (ErrorServicio ex) {
             modelo.addAttribute("error", ex.getMessage());
             modelo.addAttribute("mail", mail);
+            modelo.addAttribute("nombre", nombre);
             return "/login";
         }
     }
+      
     
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("/inicio")
-    public String inicio(){
-        return "inicio";
+    public String inicio(ModelMap modelo){
+        modelo.addAttribute("categorias", Categoria.values());
+        return "index";
     }
 
 }
