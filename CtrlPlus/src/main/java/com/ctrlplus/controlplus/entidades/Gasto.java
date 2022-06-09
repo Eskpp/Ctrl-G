@@ -3,8 +3,11 @@ package com.ctrlplus.controlplus.entidades;
 import com.ctrlplus.controlplus.enums.Categoria;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +24,10 @@ public class Gasto {
     private String id;
     
     private String descripcion;
+    
+    //@Enumerated(EnumType.STRING)
     private Categoria categoria;
+    
     private Double monto;
     
     @Temporal(TemporalType.DATE)
@@ -30,4 +36,6 @@ public class Gasto {
     @OneToOne
     private Comprobante comprobante;
 
+    @ManyToOne
+    private Usuario usuario;
 }

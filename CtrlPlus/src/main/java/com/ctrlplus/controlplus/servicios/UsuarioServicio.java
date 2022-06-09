@@ -41,8 +41,8 @@ public class UsuarioServicio implements UserDetailsService {
 
         usuario.setMail(mail);
         usuario.setNombre(nombre);
-        usuario.setGastos(new ArrayList<>());
-        usuario.setIngresos(new ArrayList<>());
+//        usuario.setGastos(new ArrayList<>());
+//        usuario.setIngresos(new ArrayList<>());
         usuario.setRol(Rol.USUARIO);
 
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
@@ -175,14 +175,14 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
-    @Transactional(propagation = Propagation.NESTED)
-    public void agregarIngreso(Usuario usuario, Ingreso ingreso) {
-        usuario.getIngresos().add(ingreso);
-    }
+//    @Transactional(propagation = Propagation.NESTED)
+//    public void agregarIngreso(Usuario usuario, Ingreso ingreso) {
+//        usuario.getIngresos().add(ingreso);
+//    }
 
-    @Transactional(propagation = Propagation.NESTED)
-    public void agregarGasto(Usuario usuario, Gasto gasto) {
-        usuario.getGastos().add(gasto);
-    }
+//    @Transactional(propagation = Propagation.NESTED)
+//    public void agregarGasto(Usuario usuario, Gasto gasto) {
+//        usuario.getGastos().add(gasto);
+//    }
 
 }

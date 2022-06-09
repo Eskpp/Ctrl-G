@@ -37,10 +37,8 @@ public class IngresoControlador {
             return "index";
         }
         try {
-            usuarioServicio.agregarIngreso(logeado,ingresoServicio.agregar(monto, descripcion, archivo));
-            //preguntar a pilar si esta buena esta forma de vincular usuario con ingreso/registro
-            //o si hacerlo en el servicio del ingreso
-            //testear metodo de vinculacion y avisar
+            ingresoServicio.agregar(monto, descripcion, logeado, archivo);
+           
             return "index";
         } catch (ErrorServicio e) {
 
