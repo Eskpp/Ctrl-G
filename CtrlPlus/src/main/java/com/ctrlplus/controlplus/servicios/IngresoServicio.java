@@ -23,11 +23,12 @@ public class IngresoServicio {
     private ComprobanteServicio comprobanteServicio;
 
     @Transactional(propagation = Propagation.NESTED)
-    public Ingreso agregar(Double monto, String descripcion, MultipartFile archivo) throws ErrorServicio {
+    public Ingreso agregar(Double monto, String descripcion, Usuario usuario, MultipartFile archivo) throws ErrorServicio {
 
         Ingreso ingreso = new Ingreso();
         ingreso.setMonto(monto);
         ingreso.setFecha(new Date());
+        ingreso.setUsuario(usuario);
         ingreso.setDescripcion(descripcion);
        if (archivo != null ) {
                 Comprobante comprobante = comprobanteServicio.guardar(archivo);

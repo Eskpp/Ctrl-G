@@ -27,11 +27,6 @@ public class Usuario {
     
     private String clave;
     
-    @OneToMany
-    private List<Gasto> gastos;
-    @OneToMany
-    private List<Ingreso> ingresos;
-    
     private Rol rol;
 
 }
