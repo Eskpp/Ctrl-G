@@ -8,12 +8,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/style.css" rel="stylesheet" type="text/css">
+  <script src="https://kit.fontawesome.com/9fc711ed30.js" crossorigin="anonymous"></script>
+
 </head>
-<header>
-  <div th:fragment="navbar">
-    <nav id="nanvaringresos" class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+<body>
+
+  <header>
+
+    <nav id="nanvaringresos" class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img width="50" height="50" src="\img\logo.jpg"></a>
+        <a class="navbar-brand" href="/inicio"><img width="100" height="100" src="\img\logoctrl.png"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -21,7 +27,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"><strong>Inicio</strong></a>
+              <a class="nav-link active" aria-current="page" href="/inicio"><strong>Inicio</strong></a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -29,38 +35,23 @@
                 <strong>Mi Dinero</strong>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Ver Ingresos</a></li>
-                <li><a class="dropdown-item" href="#">Ver Gastos</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <strong>Mi Perfil</strong>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">ayuda</a></li>
-                <li><a class="dropdown-item" href="#">privacidad</a></li>
-                <li><a class="dropdown-item" href="#">configuracion</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                <li><a class="dropdown-item" href="/ingreso/listar">Ver Ingresos</a></li>
+                <li><a class="dropdown-item" href="/gasto/listar">Ver Gastos</a></li>
               </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#"><strong>Informes</strong></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1"
-                aria-disabled="true"><strong><i>CtrlG+</i></strong></a>
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+                style="text-align:center;"><strong><i>CtrlG+</i></strong></a>
             </li>
           </ul>
 
-          <li class="nav-item dropdown">
+          <div class="navbar-nav nav-item dropdown ">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              <strong>Mi Perfil</strong>
+              <strong> <i class="fa fa-user"></i> Mi Perfil</strong>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#">ayuda</a></li>
@@ -69,19 +60,18 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+              <li><a class="dropdown-item" href="/logout">Cerrar Sesion</a></li>
             </ul>
-          </li>
+          </div>
 
         </div>
       </div>
     </nav>
-  </div>
 
-</header>
 
-<body>
-  
+  </header>
+
+  <h2 th:text="${session.usuariosession.nombre}"></h2>
 
   <!--inicio capas-->
 
@@ -114,7 +104,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title"><strong>Ingresos</strong></h4>
+          <h4 class="modal-title"><strong>Agregar Ingresos</strong></h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -152,32 +142,37 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title"><strong>Gastos</strong></h4>
+          <h4 class="modal-title"><strong>Agregar Gastos</strong></h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <!-- Modal body -->
         <div class="modal-body">
-          <p>Monto:</p>
-          <input type="number" class="form-control" placeholder="Ingrese su gasto">
-          <br>
-          <p>Descripcion:</p>
-          <input type="text" class="form-control" placeholder="Descripcion" required minlength="0" maxlength="100">
-          <p>Categorias:</p>
-          <br>
-          <select class="form-control" name="categoria">
-            <option th:each="categoria : {categoria}" th:text="${categoria}"></option>
-          </select>
-          <br>
-          <p>Ingrese comprobante:</p>
-          <form name="subida-imagenes" type="POST" enctype="multipart/formdata">
-            <input type="file" name="imagen" />
+          <form th:action="@{/gasto/ingresar}" name="subida-imagenes" method="POST" enctype="multipart/formdata">
+            <p>Monto:</p>
+            <input type="number" class="form-control" placeholder="Ingrese su gasto" name="monto">
+            <br>
+            <p>Descripcion:</p>
+            <input type="text" class="form-control" placeholder="Descripcion" required minlength="0" maxlength="100"
+              name="descripcion">
+            <br>
+            <p>Categorias:</p>
+            <select class="form-control" name="categoria">
+              <option th:each="categoria : ${categorias}" th:text="${categoria.nombre}" th:value="${categoria}">
+              </option>
+            </select>
+            <br>
+            <p>Ingrese comprobante:</p>
+
+            <input type="file" name="archivo" />
+
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Agregar Gasto</button>
           </form>
         </div>
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar Gasto</button>
+
         </div>
 
       </div>

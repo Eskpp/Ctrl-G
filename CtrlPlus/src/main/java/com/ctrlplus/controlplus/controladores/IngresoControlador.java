@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@PreAuthorize("hasAnyRole('ROLE_USER')")
+@PreAuthorize("hasAnyRole('ROLE_USUARIO')")
 @RequestMapping("/ingreso")
 public class IngresoControlador {
 
