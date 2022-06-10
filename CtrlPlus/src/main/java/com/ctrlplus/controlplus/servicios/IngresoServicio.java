@@ -30,10 +30,10 @@ public class IngresoServicio {
         ingreso.setFecha(new Date());
         ingreso.setUsuario(usuario);
         ingreso.setDescripcion(descripcion);
-       if (archivo != null ) {
-                Comprobante comprobante = comprobanteServicio.guardar(archivo);
-                ingreso.setComprobante(comprobante);
-            }
+        if (archivo != null) {
+            Comprobante comprobante = comprobanteServicio.guardar(archivo);
+            ingreso.setComprobante(comprobante);
+        }
 
         return ingresoRepositorio.save(ingreso);
     }
@@ -49,11 +49,11 @@ public class IngresoServicio {
             ingreso.setMonto(monto);
             ingreso.setFecha(new Date());
             ingreso.setDescripcion(descripcion);
-            if (archivo != null ) {
+            if (archivo != null) {
                 Comprobante comprobante = comprobanteServicio.guardar(archivo);
                 ingreso.setComprobante(comprobante);
             }
-            
+
             ingresoRepositorio.save(ingreso);
 
         } else {
@@ -74,10 +74,6 @@ public class IngresoServicio {
         }
     }
 
-    public List<Ingreso> listar() {
-        return (List<Ingreso>) ingresoRepositorio.findAll();
-    }
-
     public void validar(Double monto) throws ErrorServicio {
         if (monto == null || monto.toString().isEmpty()) {
             throw new ErrorServicio("Debe ingresar un importe.");
@@ -85,7 +81,8 @@ public class IngresoServicio {
         }
 
     }
-     public Ingreso buscarPorID(String id) throws ErrorServicio {
+
+    public Ingreso buscarPorID(String id) throws ErrorServicio {
         Optional<Ingreso> respuesta = ingresoRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Ingreso ingreso = respuesta.get();
@@ -94,5 +91,10 @@ public class IngresoServicio {
             throw new ErrorServicio("No se encontro un Ingreso con ese ID");
         }
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<Ingreso> listar(String usuarioId) {
+        return (List<Ingreso>) ingresoRepositorio.listarPorUsuario(usuarioId);
     }
 }

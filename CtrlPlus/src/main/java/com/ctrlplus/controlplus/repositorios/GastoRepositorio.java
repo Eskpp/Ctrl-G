@@ -9,39 +9,41 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GastoRepositorio extends JpaRepository<Gasto, String> {
-   
-    
+
+    @Query("SELECT g FROM Gasto g WHERE g.usuario_id = :usuario")
+    public List<Gasto> listarPorUsuario(@Param("usuario") String usuario);
+
     //buscar gastos por categoría
-    @Query("SELECT g FROM Gasto g WHERE  g.categoria = :categoria")
-    public List<Gasto> buscarPorCategoria(@Param("categoria") String categoria);
-    
+    @Query("SELECT g FROM Gasto g WHERE g.categoria = :categoria AND g.usuario_id = :usuario")
+    public List<Gasto> buscarPorCategoria(@Param("categoria") String categoria, @Param("usuario") String usuario);
+
     //ordenar gastos por categoría
-    @Query("SELECT g FROM Gasto g ORDER BY categoria asc")
-    public List<Gasto> ordenarPorCategoriaAsc();
-    
-     @Query("SELECT g FROM Gasto g ORDER BY categoria desc")
-    public List<Gasto> ordenarPorCategoriaDesc();
-    
+    @Query("SELECT g FROM Gasto g ORDER BY categoria asc WHERE g.usuario_id = :usuario")
+    public List<Gasto> ordenarPorCategoriaAsc(@Param("usuario") String usuario);
+
+    @Query("SELECT g FROM Gasto g ORDER BY categoria desc WHERE g.usuario_id = :usuario")
+    public List<Gasto> ordenarPorCategoriaDesc(@Param("usuario") String usuario);
+
     //buscar gastos por fecha
-    @Query("SELECT g FROM Gasto g WHERE  g.fecha = :fecha")
-    public List<Gasto> buscarPorFecha(@Param("fecha") String fecha);
-    
+    @Query("SELECT g FROM Gasto g WHERE  g.fecha = :fecha AND g.usuario_id = :usuario")
+    public List<Gasto> buscarPorFecha(@Param("fecha") String fecha, @Param("usuario") String usuario);
+
     //ordenar gastos por fecha
-    @Query("SELECT g FROM Gasto g ORDER BY fecha asc")
-    public List<Gasto> ordenarPorFechaAsc();
-    
-     @Query("SELECT g FROM Gasto g ORDER BY fecha desc")
-    public List<Gasto> ordenarPorFechaDesc();
-    
+    @Query("SELECT g FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.fecha asc")
+    public List<Gasto> ordenarPorFechaAsc(@Param("usuario") String usuario);
+
+    @Query("SELECT g FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.fecha desc")
+    public List<Gasto> ordenarPorFechaDesc(@Param("usuario") String usuario);
+
     //buscar gastos por monto
-     @Query("SELECT g FROM Gasto g WHERE  g.monto = :monto")
-    public List<Gasto> buscarPorMonto(@Param("monto") String monto);
-    
+    @Query("SELECT g FROM Gasto g WHERE  g.monto = :monto AND g.usuario_id = :usuario")
+    public List<Gasto> buscarPorMonto(@Param("monto") String monto, @Param("usuario") String usuario);
+
     //ordenar gastos por monto
-    @Query("SELECT g FROM Gasto g ORDER BY monto asc")
-    public List<Gasto> ordenarPorMontoAsc();
-    
-     @Query("SELECT g FROM Gasto g ORDER BY fecha desc")
-    public List<Gasto> ordenarPorMontoDesc();
-    
+    @Query("SELECT g FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.monto asc")
+    public List<Gasto> ordenarPorMontoAsc(@Param("usuario") String usuario);
+
+    @Query("SELECT g FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.fecha desc")
+    public List<Gasto> ordenarPorMontoDesc(@Param("usuario") String usuario);
+
 }

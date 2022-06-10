@@ -78,9 +78,12 @@ public class GastoControlador {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        
-        modelo.addAttribute("gastos", gastoServicio.listar());
+    public String listar(ModelMap modelo,HttpSession session) {
+        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+        if (logeado == null) {
+            return "/login";
+        }
+        modelo.addAttribute("gastos", gastoServicio.listar(logeado.getId()));
         return "gastos";// devolver donde se vea
     }
 
