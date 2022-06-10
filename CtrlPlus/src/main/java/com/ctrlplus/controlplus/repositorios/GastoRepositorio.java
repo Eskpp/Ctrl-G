@@ -12,6 +12,7 @@ public interface GastoRepositorio extends JpaRepository<Gasto, String> {
 
     @Query("SELECT g FROM Gasto g WHERE g.usuario_id = :usuario")
     public List<Gasto> listarPorUsuario(@Param("usuario") String usuario);
+    //@Query(value = "SELECT * FROM usuario WHERE email = :email", nativeQuery = true)
 
     //buscar gastos por categoría
     @Query("SELECT g FROM Gasto g WHERE g.categoria = :categoria AND g.usuario_id = :usuario")
