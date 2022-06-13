@@ -2,6 +2,7 @@ package com.ctrlplus.controlplus.servicios;
 
 import com.ctrlplus.controlplus.entidades.Comprobante;
 import com.ctrlplus.controlplus.entidades.Gasto;
+import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.repositorios.GastoRepositorio;
@@ -23,7 +24,7 @@ public class GastoServicio {
     private ComprobanteServicio comprobanteServicio;
 
     @Transactional() //agregar metodo agregarGasto proveniente de UsuarioServicio
-    public Gasto agregar(Double monto, Categoria categoria, String descripcion, MultipartFile archivo) throws ErrorServicio {
+    public Gasto agregar(Double monto, Categoria categoria, String descripcion, Usuario usuario, MultipartFile archivo) throws ErrorServicio {
 
         validar(monto, categoria);
 
@@ -33,14 +34,19 @@ public class GastoServicio {
         gasto.setFecha(new Date());
         gasto.setCategoria(categoria);
         gasto.setDescripcion(descripcion);
-       if (archivo != null ) {
-                Comprobante comprobante = comprobanteServicio.guardar(archivo);
-                gasto.setComprobante(comprobante);
-            }
+gasto.setUsuario(usuario);
+        if (archivo != null) {
+            Comprobante comprobante = comprobanteServicio.guardar(archivo);
+            gasto.setComprobante(comprobante);
+        }
 
         return gastoRepositorio.save(gasto);
     }
-    
+
+//    @Transactional(propagation = Propagation.NESTED)
+//    public void asignarAlUsuario(Usuario usuario, Gasto gasto) {
+//        
+//    }
 
     @Transactional(propagation = Propagation.NESTED)
     public void modificar(String id, Double monto, Categoria categoria, String descripcion, MultipartFile archivo) throws ErrorServicio {
@@ -54,7 +60,7 @@ public class GastoServicio {
             gasto.setFecha(new Date());
             gasto.setCategoria(categoria);
             gasto.setDescripcion(descripcion);
-           if (archivo != null ) {
+            if (archivo != null) {
                 Comprobante comprobante = comprobanteServicio.guardar(archivo);
                 gasto.setComprobante(comprobante);
             }
@@ -78,10 +84,10 @@ public class GastoServicio {
             throw new ErrorServicio("No existe el gasto que desea eliminar.");
         }
     }
-    
-     @Transactional(readOnly = true) 
+
+    @Transactional(readOnly = true)
     public List<Gasto> listar() {
-        return gastoRepositorio.findAll(); 
+        return gastoRepositorio.findAll();
     }
 
     public void validar(Double monto, Categoria categoria) throws ErrorServicio {
@@ -93,7 +99,8 @@ public class GastoServicio {
             throw new ErrorServicio("Debe seleccionar una Categoría.");
         }
     }
-     public Gasto buscarPorID(String id) throws ErrorServicio {
+
+    public Gasto buscarPorID(String id) throws ErrorServicio {
         Optional<Gasto> respuesta = gastoRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Gasto gasto = respuesta.get();

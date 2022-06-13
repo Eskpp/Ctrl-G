@@ -1,5 +1,6 @@
 package com.ctrlplus.controlplus.controladores;
 
+import com.ctrlplus.controlplus.entidades.Gasto;
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
@@ -36,9 +37,8 @@ public class GastoControlador {
         if (logeado == null) {
             return "login";
         }  try {
-            usuarioServicio.agregarGasto(logeado, gastoServicio.agregar(monto, categoria, descripcion, archivo));
-            //preguntar a pili♥ si esta buena esta forma de vincular usuario con ingreso/registro
-            //o si hacerlo en el servicio del ingreso
+           gastoServicio.agregar(monto, categoria, descripcion, logeado, archivo);
+            
             return "index";
         } catch (ErrorServicio e) {
 
