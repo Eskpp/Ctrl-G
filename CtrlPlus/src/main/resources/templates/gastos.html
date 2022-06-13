@@ -36,10 +36,9 @@
       <tr th:each="gasto:${gastos}">
         <td th:text="${gasto.fecha}"></td>
         <td th:text="${gasto.monto}"></td>
-        <td>
-          <li th:text="${categoria.getnombre}" th:value="${categoria.get.value}"> </li>
-        </td>
-        <!--esta bien la lista de categorias?-->
+        <td th:text="${gasto.categoria.nombre}"></td>
+        <!--esta bien la lista de categorias?, el error estaba en que se pasaba tanto nombre como value, solo hacia falta el nombre.
+        y faltaba el 'gasto.' antes de categoria, ya que es la categoria del gasto-->
         <td th:text="${gasto.descripcion}"></td>
         <td><img th:if="${gasto.comprobante != null}" th:src="${'/comprobante/gasto/' + gasto.id}"></td>
         <td><a href="/gasto/modificar" class="btn btn-primary" role="button">Modificar</a></td>

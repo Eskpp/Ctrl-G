@@ -113,7 +113,7 @@
       </nav>
     </header>
 
-    <h2 th:text="${session.usuariosession.nombre}"></h2>
+    <h2 th:if="${session}" th:text="${session.usuariosession.nombre}"></h2>
 
     <!--inicio capas-->
 
@@ -178,6 +178,7 @@
               <p>Monto:</p>
               <input
                 type="number"
+                name="monto"
                 class="form-control"
                 placeholder="Ingrese su dinero"
               />
@@ -185,6 +186,7 @@
               <p>Descripcion:</p>
               <input
                 type="text"
+                name="descripcion"
                 class="form-control"
                 placeholder="Descripcion"
                 required
