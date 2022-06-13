@@ -76,8 +76,12 @@ public class IngresoControlador {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        modelo.addAttribute("ingresos", ingresoServicio.listar());
+    public String listar(ModelMap modelo, HttpSession session) {
+        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+        if (logeado == null) {
+            return "/login";
+        }
+        modelo.addAttribute("ingresos", ingresoServicio.listar(logeado.getId()));
         return "ingresos";
     }
 

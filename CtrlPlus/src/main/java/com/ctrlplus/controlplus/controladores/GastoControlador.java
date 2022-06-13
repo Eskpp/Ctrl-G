@@ -8,6 +8,7 @@ import com.ctrlplus.controlplus.servicios.GastoServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_USUARIO')")
 @RequestMapping("/gasto")
 public class GastoControlador {
 
@@ -78,9 +80,12 @@ public class GastoControlador {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-        
-        modelo.addAttribute("gastos", gastoServicio.listar());
+    public String listar(ModelMap modelo,HttpSession session) {
+        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+        if (logeado == null) {
+            return "/login";
+        }
+        modelo.addAttribute("gastos", gastoServicio.listar(logeado.getId()));
         return "gastos";// devolver donde se vea
     }
 

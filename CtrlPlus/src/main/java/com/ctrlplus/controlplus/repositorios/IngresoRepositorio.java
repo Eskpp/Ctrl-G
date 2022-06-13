@@ -10,26 +10,29 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IngresoRepositorio extends JpaRepository<Ingreso, String> {
     
+    @Query(value = "SELECT * FROM Ingreso i WHERE i.usuario_id = :usuario", nativeQuery = true)
+    public List<Ingreso> listarPorUsuario(@Param("usuario") String usuario);
+    
     //buscar ingresos por fecha
-    @Query("SELECT i FROM Ingreso i WHERE  i.fecha = :fecha")
-    public List<Ingreso> buscarPorFecha(@Param("fecha") String fecha);
+    @Query(value = "SELECT * FROM Ingreso i WHERE  i.fecha = :fecha AND i.usuario_id = :usuario", nativeQuery = true)
+    public List<Ingreso> buscarPorFecha(@Param("fecha") String fecha, @Param("usuario") String usuario);
     
     //ordenar ingresos por fecha
-    @Query("SELECT i FROM Ingreso i ORDER BY fecha asc")
-    public List<Ingreso> ordenarPorFechaAsc();
+    @Query(value = "SELECT * FROM Ingreso i WHERE i.usuario_id = :usuario ORDER BY fecha asc", nativeQuery = true)
+    public List<Ingreso> ordenarPorFechaAsc(@Param("usuario") String usuario);
     
-     @Query("SELECT i FROM Gasto i ORDER BY fecha desc")
-    public List<Ingreso> ordenarPorFechaDesc();
+     @Query(value = "SELECT * FROM Gasto i WHERE i.usuario_id = :usuario ORDER BY fecha desc", nativeQuery = true)
+    public List<Ingreso> ordenarPorFechaDesc(@Param("usuario") String usuario);
     
     //buscar ingresos por monto
-     @Query("SELECT i FROM Ingreso i WHERE  i.monto = :monto")
-    public List<Ingreso> buscarPorMonto(@Param("monto") String monto);
+     @Query(value = "SELECT * FROM Ingreso i WHERE  i.monto = :monto AND i.usuario_id = :usuario", nativeQuery = true)
+    public List<Ingreso> buscarPorMonto(@Param("monto") String monto, @Param("usuario") String usuario);
     
     //ordenar ingresos por monto
-    @Query("SELECT i FROM Ingreso i ORDER BY monto asc")
-    public List<Ingreso> ordenarPorMontoAsc();
+    @Query(value = "SELECT * FROM Ingreso i WHERE i.usuario_id = :usuario ORDER BY monto asc", nativeQuery = true)
+    public List<Ingreso> ordenarPorMontoAsc(@Param("usuario") String usuario);
     
-     @Query("SELECT i FROM Ingreso i ORDER BY fecha desc")
-    public List<Ingreso> ordenarPorMontoDesc();
+     @Query(value = "SELECT * FROM Ingreso i WHERE i.usuario_id = :usuario ORDER BY fecha desc", nativeQuery = true)
+    public List<Ingreso> ordenarPorMontoDesc(@Param("usuario") String usuario);
 
 }
