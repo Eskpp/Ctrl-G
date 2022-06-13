@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/comprobante")
 public class ComprobanteControlador {
+    
     @Autowired
     private GastoServicio gastoServicio;
     @Autowired
     private IngresoServicio ingresoServicio;
     
     @GetMapping ("/gasto/{id}")
-    public ResponseEntity<byte[]> comprobanteGasto (@PathVariable String id){
+    public ResponseEntity<byte[]> comprobanteGasto (@PathVariable String id){ //id del gasto
         try {
             
             Gasto gasto = gastoServicio.buscarPorID(id);
@@ -47,7 +48,7 @@ public class ComprobanteControlador {
     }
             
     @GetMapping ("/ingreso/{id}")
-    public ResponseEntity<byte[]> comprobanteIngreso (@PathVariable String id){
+    public ResponseEntity<byte[]> comprobanteIngreso (@PathVariable String id){ //id del ingreso
         try {
             
             Ingreso ingreso = ingresoServicio.buscarPorID(id);

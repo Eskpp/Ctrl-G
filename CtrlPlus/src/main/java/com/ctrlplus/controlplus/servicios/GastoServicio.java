@@ -23,7 +23,7 @@ public class GastoServicio {
     @Autowired
     private ComprobanteServicio comprobanteServicio;
 
-    @Transactional() //agregar metodo agregarGasto proveniente de UsuarioServicio
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class}) //agregar metodo agregarGasto proveniente de UsuarioServicio
     public Gasto agregar(Double monto, Categoria categoria, String descripcion, Usuario usuario, MultipartFile archivo) throws ErrorServicio {
 
         validar(monto, categoria);
@@ -34,7 +34,7 @@ public class GastoServicio {
         gasto.setFecha(new Date());
         gasto.setCategoria(categoria);
         gasto.setDescripcion(descripcion);
-gasto.setUsuario(usuario);
+        gasto.setUsuario(usuario);
         if (archivo != null) {
             Comprobante comprobante = comprobanteServicio.guardar(archivo);
             gasto.setComprobante(comprobante);
@@ -47,7 +47,6 @@ gasto.setUsuario(usuario);
 //    public void asignarAlUsuario(Usuario usuario, Gasto gasto) {
 //        
 //    }
-
     @Transactional(propagation = Propagation.NESTED)
     public void modificar(String id, Double monto, Categoria categoria, String descripcion, MultipartFile archivo) throws ErrorServicio {
 
@@ -85,11 +84,6 @@ gasto.setUsuario(usuario);
         }
     }
 
-    @Transactional(readOnly = true)
-    public List<Gasto> listar() {
-        return gastoRepositorio.findAll();
-    }
-
     public void validar(Double monto, Categoria categoria) throws ErrorServicio {
         if (monto == null || monto.toString().isEmpty()) {
             throw new ErrorServicio("Debe ingresar un importe.");
@@ -100,6 +94,7 @@ gasto.setUsuario(usuario);
         }
     }
 
+    @Transactional(readOnly = true)
     public Gasto buscarPorID(String id) throws ErrorServicio {
         Optional<Gasto> respuesta = gastoRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -109,5 +104,10 @@ gasto.setUsuario(usuario);
             throw new ErrorServicio("No se encontro un Gasto con ese ID");
         }
 
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Gasto> listar(String usuarioId) {
+        return (List<Gasto>) gastoRepositorio.listarPorUsuario(usuarioId);
     }
 }

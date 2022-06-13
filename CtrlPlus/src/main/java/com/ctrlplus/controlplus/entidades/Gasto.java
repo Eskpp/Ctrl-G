@@ -25,7 +25,7 @@ public class Gasto {
     
     private String descripcion;
     
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
     
     private Double monto;

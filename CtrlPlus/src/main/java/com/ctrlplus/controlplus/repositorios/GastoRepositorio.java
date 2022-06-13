@@ -9,39 +9,43 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GastoRepositorio extends JpaRepository<Gasto, String> {
-   
-    
+
+//    @Query("SELECT g FROM Gasto g WHERE g.usuario_id = :usuario")
+    @Query(value = "SELECT * FROM Gasto g WHERE g.usuario_id like :usuario", nativeQuery = true)
+    public List<Gasto> listarPorUsuario(@Param("usuario") String usuario);
+    //@Query(value = "SELECT * FROM usuario WHERE email = :email", nativeQuery = true)
+
     //buscar gastos por categoría
-    @Query("SELECT g FROM Gasto g WHERE  g.categoria = :categoria")
-    public List<Gasto> buscarPorCategoria(@Param("categoria") String categoria);
-    
+    @Query(value = "SELECT * FROM Gasto g WHERE g.categoria = :categoria AND g.usuario_id = :usuario", nativeQuery = true)
+    public List<Gasto> buscarPorCategoria(@Param("categoria") String categoria, @Param("usuario") String usuario);
+
     //ordenar gastos por categoría
-    @Query("SELECT g FROM Gasto g ORDER BY categoria asc")
-    public List<Gasto> ordenarPorCategoriaAsc();
-    
-     @Query("SELECT g FROM Gasto g ORDER BY categoria desc")
-    public List<Gasto> ordenarPorCategoriaDesc();
-    
+    @Query(value = "SELECT * FROM Gasto g ORDER BY categoria asc WHERE g.usuario_id = :usuario", nativeQuery = true)
+    public List<Gasto> ordenarPorCategoriaAsc(@Param("usuario") String usuario);
+
+    @Query(value = "SELECT * FROM Gasto g ORDER BY categoria desc WHERE g.usuario_id = :usuario", nativeQuery = true)
+    public List<Gasto> ordenarPorCategoriaDesc(@Param("usuario") String usuario);
+
     //buscar gastos por fecha
-    @Query("SELECT g FROM Gasto g WHERE  g.fecha = :fecha")
-    public List<Gasto> buscarPorFecha(@Param("fecha") String fecha);
-    
+    @Query(value = "SELECT * FROM Gasto g WHERE  g.fecha = :fecha AND g.usuario_id = :usuario", nativeQuery = true)
+    public List<Gasto> buscarPorFecha(@Param("fecha") String fecha, @Param("usuario") String usuario);
+
     //ordenar gastos por fecha
-    @Query("SELECT g FROM Gasto g ORDER BY fecha asc")
-    public List<Gasto> ordenarPorFechaAsc();
-    
-     @Query("SELECT g FROM Gasto g ORDER BY fecha desc")
-    public List<Gasto> ordenarPorFechaDesc();
-    
+    @Query(value = "SELECT * FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.fecha asc", nativeQuery = true)
+    public List<Gasto> ordenarPorFechaAsc(@Param("usuario") String usuario);
+
+    @Query(value = "SELECT * FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.fecha desc", nativeQuery = true)
+    public List<Gasto> ordenarPorFechaDesc(@Param("usuario") String usuario);
+
     //buscar gastos por monto
-     @Query("SELECT g FROM Gasto g WHERE  g.monto = :monto")
-    public List<Gasto> buscarPorMonto(@Param("monto") String monto);
-    
+    @Query(value = "SELECT * FROM Gasto g WHERE  g.monto = :monto AND g.usuario_id = :usuario", nativeQuery = true)
+    public List<Gasto> buscarPorMonto(@Param("monto") String monto, @Param("usuario") String usuario);
+
     //ordenar gastos por monto
-    @Query("SELECT g FROM Gasto g ORDER BY monto asc")
-    public List<Gasto> ordenarPorMontoAsc();
-    
-     @Query("SELECT g FROM Gasto g ORDER BY fecha desc")
-    public List<Gasto> ordenarPorMontoDesc();
-    
+    @Query(value = "SELECT * FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.monto asc", nativeQuery = true)
+    public List<Gasto> ordenarPorMontoAsc(@Param("usuario") String usuario);
+
+    @Query(value = "SELECT * FROM Gasto g WHERE g.usuario_id = :usuario ORDER BY g.fecha desc", nativeQuery = true)
+    public List<Gasto> ordenarPorMontoDesc(@Param("usuario") String usuario);
+
 }
