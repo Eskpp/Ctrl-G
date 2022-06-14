@@ -114,6 +114,7 @@
     </header>
 
     <h2 th:if="${session}" th:text="${session.usuariosession.nombre}"></h2>
+    <h2 class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></h2>
 
     <!--inicio capas-->
 
@@ -189,7 +190,6 @@
                 name="descripcion"
                 class="form-control"
                 placeholder="Descripcion"
-                required
                 minlength="0"
                 maxlength="100"
               />
@@ -248,7 +248,6 @@
                 type="text"
                 class="form-control"
                 placeholder="Descripcion"
-                required
                 minlength="0"
                 maxlength="100"
                 name="descripcion"

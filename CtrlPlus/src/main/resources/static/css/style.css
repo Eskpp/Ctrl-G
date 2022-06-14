@@ -35,9 +35,12 @@ div#general{
 }
 
 div#divbot{
+  padding-top:130px;
   float:right ;
   background-color:transparent;
-  
+}
+div#divbot img{
+    margin-bottom: 20px;
 }
 
 div#imagenlogin{
