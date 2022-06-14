@@ -6,10 +6,12 @@
 /*-----------------------Style vista LOGIN-----------------------*/
 body#blogin{
 
-  background-image:url(/img/fondoo.jpg) ;
+  background-image:url(/img/fondosinmarcadeagua.jpg) ;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+
 
 nav#nanvarlogin{
  border:solid;
@@ -98,7 +100,9 @@ button#botonmenos{
 }
 
 nav#nanvaringresos{
-  background-image:url(/img/nanvarrrr.jpg) ;
+  border:solid;
+  border-color:#0AE000 ;
+  
 
 }
 
