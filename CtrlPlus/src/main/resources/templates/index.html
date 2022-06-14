@@ -74,6 +74,7 @@
   </header>
 
   <h2 th:if="${session}" th:text="${session.usuariosession.nombre}"></h2>
+  <h2 class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></h2>
 
   <!--inicio capas-->
 
@@ -117,7 +118,7 @@
             <input type="number" name="monto" class="form-control" placeholder="Ingrese su dinero" />
             <br />
             <p>Descripcion:</p>
-            <input type="text" name="descripcion" class="form-control" placeholder="Descripcion" required minlength="0"
+            <input type="text" name="descripcion" class="form-control" placeholder="Descripcion" minlength="0"
               maxlength="100" />
             <br />
             <p>Ingrese comprobante:</p>
@@ -153,7 +154,7 @@
             <input type="number" class="form-control" placeholder="Ingrese su gasto" name="monto" />
             <br />
             <p>Descripcion:</p>
-            <input type="text" class="form-control" placeholder="Descripcion" required minlength="0" maxlength="100"
+            <input type="text" class="form-control" placeholder="Descripcion" minlength="0" maxlength="100"
               name="descripcion" />
             <br />
             <p>Categorias:</p>
