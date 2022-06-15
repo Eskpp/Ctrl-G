@@ -107,9 +107,9 @@ public class IngresoControlador {
         } catch (ErrorServicio ex) {
 
             modelo.addAttribute("error", ex.getMessage());
-            modelo.addAttribute("id", id);
+            modelo.addAttribute("id", id);// creo que no hace falta devolverlo
             modelo.addAttribute("ingresos", ingresoServicio.listar(logeado.getId()));
-            return "redirect:/ingreso/listar";
+            return "/ingreso/listar";
         }
 
     }

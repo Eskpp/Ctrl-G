@@ -35,12 +35,13 @@ public class GastoControlador {
             @RequestParam(required = false) MultipartFile archivo,
             @RequestParam Categoria categoria) {
 
-        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+        Usuario logeado = (Usuario) session.getAttribute("usuariosession");
         if (logeado == null) {
             return "login";
-        }  try {
-           gastoServicio.agregar(monto, categoria, descripcion, logeado, archivo);
-            
+        }
+        try {
+            gastoServicio.agregar(monto, categoria, descripcion, logeado, archivo);
+
             return "index";
         } catch (ErrorServicio e) {
 
@@ -80,8 +81,8 @@ public class GastoControlador {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap modelo,HttpSession session) {
-        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+    public String listar(ModelMap modelo, HttpSession session) {
+        Usuario logeado = (Usuario) session.getAttribute("usuariosession");
         if (logeado == null) {
             return "/login";
         }
@@ -91,16 +92,20 @@ public class GastoControlador {
     }
 
     @PostMapping("/eliminar")
-    public String eliminar(ModelMap modelo, @RequestParam String id) {
-
+    public String eliminar(ModelMap modelo, @RequestParam String id, HttpSession session) {
+        Usuario logeado = (Usuario) session.getAttribute("usuariosession");
+        if (logeado == null) {
+            return "/login";
+        }
         try {
             gastoServicio.eliminar(id);
-            return "index";
+            return "redirect:/gasto/listar";
         } catch (ErrorServicio ex) {
 
             modelo.addAttribute("error", ex.getMessage());
-
-            return "index";
+            modelo.addAttribute("id", id);// creo que no hace falta devolverlo
+            modelo.addAttribute("ingresos", gastoServicio.listar(logeado.getId()));
+            return "/gasto/listar";
         }
 
     }

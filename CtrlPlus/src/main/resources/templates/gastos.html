@@ -49,8 +49,8 @@
         y faltaba el 'gasto.' antes de categoria, ya que es la categoria del gasto-->
         <td th:text="${gasto.descripcion}"></td>
         <td><img width="120" height="70" th:if="${gasto.comprobante != null}" th:src="${'/comprobante/gasto/' + gasto.id}"></td>
-        <td><a class="abrir-editar btn btn-primary" role="button" data-bs-toggle="modal" data-bs-target="#modificar" th:attr="data-id='${gasto.id}'" th:data-id="${gasto.id}"><i class="fa-solid fa-pencil"></i></a></td>
-        <td><a href="/ingreso/eliminar" class="btn btn-link" th:action="@{/ingreso/eliminar}" method="post" role="button"><i class="fa-solid fa-trash" style="color:red ;"></i>>
+        <td><a class="abrir-editar btn btn-link-primary" role="button" data-bs-toggle="modal" data-bs-target="#modificar" th:attr="data-id='${gasto.id}'" th:data-id="${gasto.id}"><i class="fa-solid fa-pencil"></i></a></td>
+        <td><a class="btn btn-link" th:attr="onclick=|borrar('${gasto.id}')|" role="button"><i class="fa-solid fa-trash" style="color:red ;"></i></td>
       </tr>
     </tbody>
   </table>
@@ -61,7 +61,7 @@
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title" style="color:#0AE000 ;"><strong>Agregar Gastos</strong></h4>
+          <h4 class="modal-title" style="color:#0AE000 ;"><strong>Modificar Gasto</strong></h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -108,6 +108,15 @@
       $(".modal-body #id-modificar").val( gastoId );
  });
    </script>
+   <script>  
+    function borrar(id) {
+        let text = "Seguro desea borrar el gasto?\nAprete Aceptar o Cancelar.";
+        if (confirm(text) === true) {
+            $.post("/gasto/eliminar", {id: id});
+            return "/gasto/listar"; // no funciona el retorno, deberia buscar la forma de hacer el servicio sincrono y que se espere a que termine para el redirect?
+        }
+    }
+</script>
 
 
 
