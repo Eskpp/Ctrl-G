@@ -13,41 +13,48 @@
 </head>
 
 <body>
-
+  
   <header>
     <nav th:replace="index :: navbar"></nav>
   </header>
+  <div th:replace="index :: modaleditarp"></div>
+  <div class="container">
+    <div class="row">
+      <br>
+      <div style="text-align:center;">
+        <h4><strong>Ultimos Gastos</strong></h4>
+      </div>
+      <br>
 
+      <table class="table table-success">
 
-  <table class="table table-success">
-
-    <thead>
-      <tr>
-        <th scope="col">Fecha</th>
-        <th scope="col">Monto</th>
-        <th scope="col">Categoria</th>
-        <th scope="col">Descripcion</th>
-        <th scope="col">Comprobante</th>
-        <th scope="col">Modificar</th>
-        <th scope="col">Eliminar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="gasto:${gastos}">
-        <td th:text="${gasto.fecha}"></td>
-        <td th:text="${gasto.monto}"></td>
-        <td th:text="${gasto.categoria.nombre}"></td>
-        <!--esta bien la lista de categorias?, el error estaba en que se pasaba tanto nombre como value, solo hacia falta el nombre.
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Comprobante</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="gasto:${gastos}">
+            <td th:text="${gasto.fecha}"></td>
+            <td th:text="${gasto.monto}"></td>
+            <td th:text="${gasto.categoria.nombre}"></td>
+            <!--esta bien la lista de categorias?, el error estaba en que se pasaba tanto nombre como value, solo hacia falta el nombre.
         y faltaba el 'gasto.' antes de categoria, ya que es la categoria del gasto-->
-        <td th:text="${gasto.descripcion}"></td>
-        <td><img th:if="${gasto.comprobante != null}" th:src="${'/comprobante/gasto/' + gasto.id}"></td>
-        <td><a href="/gasto/modificar" class="btn btn-primary" role="button">Modificar</a></td>
-        <td><a href="/gasto/eliminar" class="btn btn-danger" th:action="@{/gasto/eliminar}" method="post"
-            role="button">Eliminar</a>
-      </tr>
-    </tbody>
-  </table>
-
+            <td th:text="${gasto.descripcion}"></td>
+            <td><img width="120" height="70" th:if="${gasto.comprobante != null}" th:src="${'/comprobante/gasto/' + gasto.id}"></td>
+            <td><a href="/ingreso/modificar" class="btn btn-link-primary" role="button"><i class="fa-solid fa-pencil"></i></i></a></td>
+            <td><a href="/ingreso/eliminar" class="btn btn-link" th:action="@{/ingreso/eliminar}" method="post" role="button"><i class="fa-solid fa-trash" style="color:red ;"></i>>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 
 

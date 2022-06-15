@@ -18,7 +18,7 @@
 
     <nav id="nanvaringresos" class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/inicio"><img width="100" height="100" src="\img\logoctrl.png" /></a>
+        <a class="navbar-brand" href="/inicio"><img width="150" height="60" src="\img\logoctrl.png" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@
               <a class="nav-link active" aria-current="page" href="/inicio"><strong>Inicio</strong></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"><strong>Informes</strong></a>
+              <a class="nav-link active" aria-current="page" href="/informes"><strong>Informes</strong></a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -45,7 +45,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item" >
+            <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
                 style="text-align: center"><strong><i>CtrlG+</i></strong></a>
             </li>
@@ -54,12 +54,14 @@
           <div class="navbar-nav nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              <strong> <i class="fa fa-user"></i> Mi Perfil</strong>
+              <i class="fa fa-user"></i> <i th:if="${session}" th:text="${session.usuariosession.nombre}"></i>
+
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">ayuda</a></li>
-              <li><a class="dropdown-item" href="#">privacidad</a></li>
-              <li><a class="dropdown-item" href="#">configuracion</a></li>
+              <li><button type="button" class="btn btn-transparent" style="background-color:transparent; border:transparent" data-bs-toggle="modal" data-bs-target="#eperfil">
+                Editar Perfil
+              </button>
+              </li>
               <li>
                 <hr class="dropdown-divider" />
               </li>
@@ -72,9 +74,39 @@
       </div>
     </nav>
   </header>
+   
+  <div  th:fragment="modaleditarp">
 
-  <h2 th:if="${session}" th:text="${session.usuariosession.nombre}"></h2>
+    <div class="modal" id="eperfil">
+      <div class="modal-dialog">
+        <div class="modal-content">
+  
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Editar Perfil</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+  
+          <!-- Modal body -->
+          <div class="modal-body">
+            Modal body..
+          </div>
+  
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+ <div style="text-align:center"> <h3><i>Bienvenido
+  <h3 th:if="${session}" th:text="${session.usuariosession.nombre}"></h3>
   <h2 class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></h2>
+</i></h3></div>
 
   <!--inicio capas-->
 
@@ -87,7 +119,8 @@
       <h1 style="text-align: center">
         <strong><i>$5000</i></strong>
       </h1>
-      <button type="button" class="btn btn-success" style="background-color:#0AE000;" data-bs-toggle="modal" data-bs-target="#ingresos" id="botonmas">
+      <button type="button" class="btn btn-success" style="background-color:#0AE000;" data-bs-toggle="modal"
+        data-bs-target="#ingresos" id="botonmas">
         <h1 style="font-size: 50px"><strong>+</strong></h1>
       </button>
       <button style="background-color: red;" type="button" class="btn btn-danger" data-bs-toggle="modal"
