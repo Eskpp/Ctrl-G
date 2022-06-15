@@ -13,10 +13,14 @@
 </head>
 
 <body>
-  <header></header>
-  <nav th:replace="index :: navbar"></nav>
+  <header><nav th:replace="index :: navbar"></nav></header>
+  <div th:replace="index :: modaleditarp"></div>
+  
   <div class="container">
     <div class="row">
+      <br>
+      <div style="text-align:center;"><h4><strong>Ultimos Ingresos</strong></h4></div>
+      <br>
       <table class="table table-primary">
 
         <table class="table table-success">
@@ -36,8 +40,8 @@
               <td th:text="${ingreso.fecha}"></td>
               <td th:text="${ingreso.monto}"></td>
               <td th:text="${ingreso.descripcion}"></td>
-              <td><img th:if="${ingreso.comprobante != null}" th:src="${'/comprobante/ingreso/' + ingreso.id}"></td>
-              <td><a href="/ingreso/modificar" class="btn btn-link-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+              <td><button style="background-color:transparent; border:transparent"><i class="fa fa-picture-o" aria-hidden="true"></i></button></i></td>
+              <td><a href="/ingreso/modificar" class="btn btn-link-primary" role="button"><i class="fa-solid fa-pencil"></i></i></a></td>
               <td><a href="/ingreso/eliminar" class="btn btn-link" th:action="@{/ingreso/eliminar}" method="post" role="button"><i class="fa-solid fa-trash" style="color:red ;"></i>
               </a>
             </tr>
