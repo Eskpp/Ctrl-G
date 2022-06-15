@@ -86,6 +86,7 @@ public class GastoControlador {
             return "/login";
         }
         modelo.addAttribute("gastos", gastoServicio.listar(logeado.getId()));
+        modelo.addAttribute("categorias", Categoria.values());
         return "gastos";// devolver donde se vea
     }
 
