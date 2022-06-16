@@ -14,13 +14,17 @@
 </head>
 
 <body>
-  <header><nav th:replace="index :: navbar"></nav></header>
+  <header>
+    <nav th:replace="index :: navbar"></nav>
+  </header>
   <div th:replace="index :: modaleditarp"></div>
-  
+
   <div class="container">
     <div class="row">
       <br>
-      <div style="text-align:center;"><h4><strong>Ultimos Ingresos</strong></h4></div>
+      <div style="text-align:center;">
+        <h4><strong>Ultimos Ingresos</strong></h4>
+      </div>
       <br>
       <table class="table table-primary">
 
@@ -44,9 +48,15 @@
               <td th:if="${ingreso.categoria}" th:text="${ingreso.categoria.nombre}"></td>
               <td th:unless="${ingreso.categoria}"> </td>
               <td th:text="${ingreso.descripcion}"></td>
-              <td><button style="background-color:transparent; border:transparent"><i class="fa fa-picture-o" aria-hidden="true"></i></button></i></td>
-              <td><a class="abrir-editar btn btn-link-primary" role="button" data-bs-toggle="modal" data-bs-target="#modificar" th:data-id="${ingreso.id}"><i class="fa-solid fa-pencil"></i></a></td>
-              <td><a class="btn btn-link" th:attr="onclick=|borrar('${ingreso.id}')|" role="button"><i class="fa-solid fa-trash" style="color:red ;"></i></td>
+              <td>
+                <img src = "" id = "img"/> <input type="button" class="fa fa-picture-o" onclick="pic1()"/>
+
+              </td>
+              <td><a class="abrir-editar btn btn-link-primary" role="button" data-bs-toggle="modal"
+                  data-bs-target="#modificar" th:attr="data-id='${ingreso.id}'" th:data-id="${ingreso.id}"><i
+                    class="fa-solid fa-pencil"></i></a></td>
+              <td><a class="btn btn-link" th:attr="onclick=|borrar('${ingreso.id}')|" role="button"><i
+                    class="fa-solid fa-trash" style="color:red ;"></i></td>
               </a>
             </tr>
           </tbody>
@@ -54,15 +64,10 @@
     </div>
   </div>
 
-<!-- The Moda2 -->
-<div class="modal" id="modificar">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title" style="color:#0AE000 ;"><strong>Modificar Ingreso</strong></h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+  <script type="text/javascript">
+    function pic1() {
+      document.getElementById("comprobante").src = "picture 1 source";
+    } </script>
 
       <!-- Modal body -->
       <div class="modal-body" style="color:#0AE000 ;">
@@ -92,8 +97,41 @@
         </form>
       </div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer"></div>
+  <!-- The Moda2 -->
+  <div class="modal" id="modificar">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" style="color:#0AE000 ;"><strong>Modificar Ingreso</strong></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body" style="color:#0AE000 ;">
+          <form th:action="@{/ingreso/modificar}" method="POST" enctype="multipart/form-data">
+            <label for="id">Id</label>
+            <input class="form-control" type="text" value="" id="id-modificar" name="id" readonly>
+            <p>Monto:</p>
+            <input type="number" class="form-control" placeholder="Ingrese su ingreso" name="monto" />
+            <br />
+            <p>Descripcion:</p>
+            <input type="text" class="form-control" placeholder="Descripcion" minlength="0" maxlength="100"
+              name="descripcion" />
+            <br />
+            <p>Ingrese comprobante:</p>
+            <input type="file" class="form-control" name="archivo" />
+            <br>
+
+            <button type="submit" style="background-color:#0AE000;" class="btn btn-success" data-bs-dismiss="modal">
+              Editar ingreso
+            </button>
+          </form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -109,11 +147,11 @@
   function borrar(id) {
       let text = "Seguro desea borrar el gasto?\nAprete Aceptar o Cancelar.";
       if (confirm(text) === true) {
-          $.post("/ingreso/eliminar", {id: id});
-          return "/ingreso/listar"; // no funciona el retorno, deberia buscar la forma de hacer el servicio sincrono y que se espere a que termine para el redirect?
+        $.post("/ingreso/eliminar", { id: id });
+        return "/ingreso/listar"; // no funciona el retorno, deberia buscar la forma de hacer el servicio sincrono y que se espere a que termine para el redirect?
       }
-  }
-</script>
+    }
+  </script>
 
 
 
