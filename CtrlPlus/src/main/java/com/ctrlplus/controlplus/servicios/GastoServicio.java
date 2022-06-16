@@ -110,4 +110,9 @@ public class GastoServicio {
     public List<Gasto> listar(String usuarioId) {
         return (List<Gasto>) gastoRepositorio.listarPorUsuario(usuarioId);
     }
+    
+    @Transactional(readOnly = true)
+    public List<Gasto> listarPorFecha(String usuarioId) {
+        return (List<Gasto>) gastoRepositorio.ordenarPorFechaDesc(usuarioId);
+    }
 }

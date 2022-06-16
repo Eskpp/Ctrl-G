@@ -2,6 +2,7 @@ package com.ctrlplus.controlplus.controladores;
 
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Categoria;
+import com.ctrlplus.controlplus.enums.CategoriaIngreso;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.IngresoServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
@@ -31,14 +32,15 @@ public class IngresoControlador {
             HttpSession session,
             @RequestParam() Double monto,
             @RequestParam(required = false) String descripcion,
-            @RequestParam(required = false) MultipartFile archivo) {
+            @RequestParam(required = false) MultipartFile archivo,
+            @RequestParam CategoriaIngreso categoria) {
 
         Usuario logeado = (Usuario) session.getAttribute("usuariosession");
         if (logeado == null) {
             return "redirect:/login";
         }
         try {
-            ingresoServicio.agregar(monto, descripcion, logeado, archivo);
+            ingresoServicio.agregar(monto, descripcion, logeado, archivo, categoria);
 
             return "redirect:/inicio";
         } catch (ErrorServicio e) {
@@ -62,14 +64,15 @@ public class IngresoControlador {
             @RequestParam(required = false) String descripcion,
             @RequestParam(required = false) MultipartFile archivo,
             @RequestParam() String id,
-            HttpSession session) {
+            HttpSession session,
+            @RequestParam CategoriaIngreso categoria) {
         Usuario logeado = (Usuario) session.getAttribute("usuariosession");
         if (logeado == null) {
             return "/login";
         }
         try {
 
-            ingresoServicio.modificar(id, monto, descripcion, archivo);
+            ingresoServicio.modificar(id, monto, descripcion, archivo, categoria);
             return "redirect:/ingreso/listar";
         } catch (ErrorServicio e) {
 
@@ -91,7 +94,8 @@ public class IngresoControlador {
         if (logeado == null) {
             return "/login";
         }
-        modelo.addAttribute("ingresos", ingresoServicio.listar(logeado.getId()));
+        modelo.addAttribute("categoriasingreso", CategoriaIngreso.values());
+        modelo.addAttribute("ingresos", ingresoServicio.listarPorFecha(logeado.getId()));
         return "ingresos";
     }
 
@@ -103,12 +107,15 @@ public class IngresoControlador {
         }
         try {
             ingresoServicio.eliminar(id);
-            return "redirect:/ingreso/listar";
+            modelo.addAttribute("categoriasingreso", CategoriaIngreso.values());
+            modelo.addAttribute("ingresos", ingresoServicio.listarPorFecha(logeado.getId()));
+            return "ingresos";
+//            return "redirect:/ingreso/listar";
         } catch (ErrorServicio ex) {
 
             modelo.addAttribute("error", ex.getMessage());
             modelo.addAttribute("id", id);// creo que no hace falta devolverlo
-            modelo.addAttribute("ingresos", ingresoServicio.listar(logeado.getId()));
+            modelo.addAttribute("ingresos", ingresoServicio.listarPorFecha(logeado.getId()));
             return "/ingreso/listar";
         }
 

@@ -1,12 +1,10 @@
 package com.ctrlplus.controlplus.controladores;
 
-import com.ctrlplus.controlplus.entidades.Gasto;
-import com.ctrlplus.controlplus.entidades.Ingreso;
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Categoria;
+import com.ctrlplus.controlplus.enums.CategoriaIngreso;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,6 +67,8 @@ public class PortalControlador {
         String IDusuario = logueado.getId();
         modelo.addAttribute("saldo", usuarioServicio.calcularSaldo(IDusuario));
         modelo.addAttribute("categorias", Categoria.values());
+        modelo.addAttribute("categoriasingreso", CategoriaIngreso.values());
+        modelo.addAttribute("movimientos", usuarioServicio.listarMovimientos(IDusuario));
         return "index";
     }
 
