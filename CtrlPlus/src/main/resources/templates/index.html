@@ -29,7 +29,7 @@
               <a class="nav-link active" aria-current="page" href="/inicio"><strong>Inicio</strong></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/informes"><strong>Informes</strong></a>
+              <a class="nav-link active" aria-current="page" href="/informes"><strong>Informes</strong></a> <!--Poner ruta controlador-->
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -58,9 +58,11 @@
 
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><button type="button" class="btn btn-transparent" style="background-color:transparent; border:transparent" data-bs-toggle="modal" data-bs-target="#eperfil">
-                Editar Perfil
-              </button>
+              <li><button type="button" class="btn btn-transparent"
+                  style="background-color:transparent; border:transparent" data-bs-toggle="modal"
+                  data-bs-target="#eperfil">
+                  Editar Perfil
+                </button>
               </li>
               <li>
                 <hr class="dropdown-divider" />
@@ -74,49 +76,62 @@
       </div>
     </nav>
   </header>
-   
-  <div  th:fragment="modaleditarp">
+
+  <div th:fragment="modaleditarp">
 
     <div class="modal" id="eperfil">
       <div class="modal-dialog">
         <div class="modal-content">
-  
+
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Editar Perfil</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div style="text-align: center;">
+              <h4 class="modal-title" style="color:#0AE000 ;"><strong>Editar Perfil</strong></h4>
+            </div> 
+            <button type="button"   class="btn-close" data-bs-dismiss="modal" style="background-color: #0AE000;"></button>
           </div>
-  
+
           <!-- Modal body -->
-          <div class="modal-body">
-            Modal body..
+          <div class="modal-body" style="color:#0AE000 ;">
+            <form>
+
+              <p>Ingrese su nuevo nombre:</p>
+              <input type="text" class="form-control" placeholder=" Ingrese su nuevo nombre" />
+              <br />
+              <p>Cambiar Contraseña:</p>
+              <input type="password" class="form-control" placeholder="Cambiar Contraseña" minlength="0"
+                maxlength="100" />
+              <br />
+              <p>Confirme Contraseña:</p>
+              <input type="password" class="form-control" placeholder="Confirme Contraseña" minlength="0"
+                maxlength="100" />
+              <br>
+
+              <button type="submit" style="background-color:#0AE000;" class="btn btn-success" data-bs-dismiss="modal">
+                Editar Perfil
+              </button>
+            </form>
           </div>
-  
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-          </div>
-  
+
+
+
         </div>
       </div>
     </div>
 
   </div>
 
- <div style="text-align:center"> <h3><i>¡Bienvenid@!
-  <h3 th:if="${session}" th:text="${session.usuariosession.nombre}"></h3>
-  <h2 class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></h2>
-</i></h3></div>
+
 
   <!--inicio capas-->
 
-  <div id="generalingresos">
+  <div id="generalingresos" >
     <div id="generalingresoss">
       <h1 style="text-align: center">
         <strong>Tu saldo actual es:</strong>
       </h1>
       <h1 style="text-align: center">
-        <strong th:text="${saldo}" ></strong>
+        <strong th:text="${saldo}"></strong>
       </h1>
       <button type="button" class="btn btn-success" style="background-color:#0AE000;" data-bs-toggle="modal"
         data-bs-target="#ingresos" id="botonmas">
