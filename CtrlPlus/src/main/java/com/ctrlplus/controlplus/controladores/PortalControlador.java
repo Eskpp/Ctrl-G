@@ -1,8 +1,13 @@
 package com.ctrlplus.controlplus.controladores;
 
+import com.ctrlplus.controlplus.entidades.Gasto;
+import com.ctrlplus.controlplus.entidades.Ingreso;
+import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
+import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -53,11 +58,16 @@ public class PortalControlador {
             return "/login";
         }
     }
-      
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("/inicio")
-    public String inicio(ModelMap modelo){
+    public String inicio(ModelMap modelo, HttpSession session) {
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        if (logueado == null) {
+            return "redirect:/login";
+        }
+        String IDusuario = logueado.getId();
+        modelo.addAttribute("saldo", usuarioServicio.calcularSaldo(IDusuario));
         modelo.addAttribute("categorias", Categoria.values());
         return "index";
     }

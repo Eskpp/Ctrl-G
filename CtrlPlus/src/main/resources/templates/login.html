@@ -18,7 +18,7 @@
         <header >
             <nav id="nanvarlogin" class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#"><img width="100" height="100" src="\img\logoctrl.png"></a>
+                    <a class="navbar-brand" href="#"><img width="150" height="60" src="\img\logoctrl.png"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -34,7 +34,7 @@
 
             <!-- botones y texto primera vista -->
             <div class="" id="divbot" style="text-align: center;">        
-                <img  src="\img\logoctrl.png" width="273" height="273">          
+                <img  src="\img\logoctrl.png" width="273" height="104">          
                 <p><font color="{% with  as  %}{% endwith %}"> <i><strong> "El único presupuesto bueno <br> es el presupuesto equilibrado"</strong></i></p>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#login">
                     Iniciar Sesion
@@ -66,27 +66,29 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/logincheck" method="POST"> <!-- no se si /login o logincheck -->
+                        <form action="/logincheck" method="POST" novalidate> <!-- no se si /login o logincheck -->
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="mail">
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="mail" required>
+                                <div class="invalid-feedback">Ingrese una dirección de correo válida</div>
                                 <div id="emailHelp" class="form-text"> Nunca compartiremos tu correo electrónico con nadie más. <i><strong>-|CTRL PLUS|-</strong></i></div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" name="clave">
+                                <input type="password" class="form-control" id="exampleInputPassword1" name="clave" required>
+                                <div class="invalid-feedback">Ingrese una clave</div>
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1">no te olvides la contraseña</label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Entrar</button>
+                            <button type="submit" class="btn btn-success">Entrar</button>
                         </form>
                     </div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#register">
+                        <button  type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#register">
                             Registrarse
                         </button>
 
@@ -120,23 +122,24 @@
                         <form method="post" action="/registro">
                             <div class="form-input">
 
-                                <i class="fa fa-envelope"></i>
-                                <input type="text" class="form-control" placeholder="Correo Electronico" name="mail">
+                                
+                                <label for="mail"><i class="fa fa-envelope"></i> Correo electrónico</label>
+                                <input type="text" class="form-control" placeholder="Correo Electronico" name="mail" id="mail">
 
                             </div>
 
                             <div class="form-input">
 
-                                <i class="fa fa-user"></i>
-                                <input type="text" class="form-control" placeholder="Nombre Completo" name="nombre">
+                                <label for="nombre"><i class="fa fa-user"></i> Nombre completo</label>                                
+                                <input type="text" class="form-control" placeholder="Nombre Completo" name="nombre" id="nombre">
 
                             </div>
 
 
                             <div class="form-input">
 
-                                <i class="fa fa-lock"></i>
-                                <input type="password" class="form-control" placeholder="Clave" name="clave">
+                                <label for="clave"><i class="fa fa-lock"></i> Contraseña</label>                                 
+                                <input type="password" class="form-control" placeholder="Clave" name="clave" id="clave">
 
                             </div>
 
@@ -155,7 +158,7 @@
                             </div>
 
 
-                            <button aling="left" type="submit" class="btn btn-primary mt-4 signup">Registrase</button>                            
+                            <button aling="left" type="submit"  class="btn btn-success mt-4 signup" >Registrase</button>                            
                         </form>
 
 
@@ -165,7 +168,7 @@
                         <!-- Modal footer -->
                         <div class="modal-footer">
 
-                            <p>ya tienes cuenta? </p> <button style="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">
+                            <p>ya tienes cuenta? </p> <button style="" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#login">
                                 Iniciar Sesion
                             </button>
 

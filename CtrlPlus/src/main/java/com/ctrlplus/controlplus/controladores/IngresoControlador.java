@@ -1,6 +1,7 @@
 package com.ctrlplus.controlplus.controladores;
 
 import com.ctrlplus.controlplus.entidades.Usuario;
+import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
 import com.ctrlplus.controlplus.servicios.IngresoServicio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
@@ -32,21 +33,24 @@ public class IngresoControlador {
             @RequestParam(required = false) String descripcion,
             @RequestParam(required = false) MultipartFile archivo) {
 
-        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+        Usuario logeado = (Usuario) session.getAttribute("usuariosession");
         if (logeado == null) {
-            return "index";
+            return "redirect:/login";
         }
         try {
             ingresoServicio.agregar(monto, descripcion, logeado, archivo);
-           
-            return "index";
+
+            return "redirect:/inicio";
         } catch (ErrorServicio e) {
 
             modelo.addAttribute("error", e.getMessage());
             modelo.addAttribute("monto", monto);
             if (descripcion != null) {
                 modelo.addAttribute("descripcion", descripcion);
+
             }
+            modelo.addAttribute("saldo", usuarioServicio.calcularSaldo(logeado.getId()));
+            modelo.addAttribute("categorias", Categoria.values());
             //como devolver una foto por modelo, asi el usuario no tiene que resubirla
             return "index";
         }
@@ -57,11 +61,16 @@ public class IngresoControlador {
             @RequestParam() Double monto,
             @RequestParam(required = false) String descripcion,
             @RequestParam(required = false) MultipartFile archivo,
-            @RequestParam() String id) {
+            @RequestParam() String id,
+            HttpSession session) {
+        Usuario logeado = (Usuario) session.getAttribute("usuariosession");
+        if (logeado == null) {
+            return "/login";
+        }
         try {
 
             ingresoServicio.modificar(id, monto, descripcion, archivo);
-            return "index";
+            return "redirect:/ingreso/listar";
         } catch (ErrorServicio e) {
 
             modelo.addAttribute("error", e.getMessage());
@@ -70,14 +79,15 @@ public class IngresoControlador {
                 modelo.addAttribute("descripcion", descripcion);
             }
             modelo.addAttribute("id", id);
-            return "index";
+            modelo.addAttribute("ingresos", ingresoServicio.listar(logeado.getId()));
+            return "redirect:/ingreso/listar";
         }
 
     }
 
     @GetMapping("/listar")
     public String listar(ModelMap modelo, HttpSession session) {
-        Usuario logeado = (Usuario)session.getAttribute("usuariosession");
+        Usuario logeado = (Usuario) session.getAttribute("usuariosession");
         if (logeado == null) {
             return "/login";
         }
@@ -86,16 +96,20 @@ public class IngresoControlador {
     }
 
     @PostMapping("/eliminar")
-    public String eliminar(ModelMap modelo, @RequestParam String id) {
-
+    public String eliminar(ModelMap modelo, @RequestParam String id, HttpSession session) {
+        Usuario logeado = (Usuario) session.getAttribute("usuariosession");
+        if (logeado == null) {
+            return "/login";
+        }
         try {
             ingresoServicio.eliminar(id);
-            return "index";
+            return "redirect:/ingreso/listar";
         } catch (ErrorServicio ex) {
 
             modelo.addAttribute("error", ex.getMessage());
-
-            return "index";
+            modelo.addAttribute("id", id);// creo que no hace falta devolverlo
+            modelo.addAttribute("ingresos", ingresoServicio.listar(logeado.getId()));
+            return "/ingreso/listar";
         }
 
     }

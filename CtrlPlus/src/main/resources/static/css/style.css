@@ -6,10 +6,12 @@
 /*-----------------------Style vista LOGIN-----------------------*/
 body#blogin{
 
-  background-image:url(/img/fondoo.jpg) ;
+  background-image:url(/img/fondosinmarcadeagua.jpg) ;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+
 
 nav#nanvarlogin{
  border:solid;
@@ -35,9 +37,12 @@ div#general{
 }
 
 div#divbot{
+  padding-top:130px;
   float:right ;
   background-color:transparent;
-  
+}
+div#divbot img{
+    margin-bottom: 20px;
 }
 
 div#imagenlogin{
@@ -58,6 +63,8 @@ div#imagenlogin{
 /*-----------------------Final vista LOGIN-----------------------*/
 
 /*-----------------------Inicio vista Ingresos-Gastos-----------------------*/
+
+
 
 
 button#botonmas{
@@ -95,7 +102,9 @@ button#botonmenos{
 }
 
 nav#nanvaringresos{
-  background-image:url(/img/nanvarrrr.jpg) ;
+  border:solid;
+  border-color:#0AE000 ;
+  
 
 }
 

@@ -5,6 +5,8 @@ import com.ctrlplus.controlplus.entidades.Ingreso;
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Rol;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
+import com.ctrlplus.controlplus.repositorios.GastoRepositorio;
+import com.ctrlplus.controlplus.repositorios.IngresoRepositorio;
 import com.ctrlplus.controlplus.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,11 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private IngresoRepositorio ingresoRepositorio;
+    @Autowired
+    private GastoRepositorio gastoRepositorio;
 
     @Transactional(propagation = Propagation.NESTED)
     public Usuario registrar(String mail, String nombre, String clave, String clave2) throws ErrorServicio {
@@ -98,7 +105,7 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("El mail no puede ser nulo.");
         }
 
-        if (usuarioRepositorio.buscarPorMail(mail) != null){
+        if (usuarioRepositorio.buscarPorMail(mail) != null) {
             throw new ErrorServicio("Ya existe un usuario con ese mail.");
         }
 
@@ -148,7 +155,8 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
-    public Double saldoIngresos(List<Ingreso> ingresos) {
+    public Double saldoIngresos(String IDusuario) {
+        List<Ingreso> ingresos = ingresoRepositorio.listarPorUsuario(IDusuario);
         Double sumaI = 0.0;
         for (Ingreso ingreso : ingresos) {
             sumaI += ingreso.getMonto();
@@ -156,12 +164,23 @@ public class UsuarioServicio implements UserDetailsService {
         return sumaI;
     }
 
-    public Double saldoGastos(List<Gasto> gastos) {
+    public Double saldoGastos(String IDusuario) {
+        List<Gasto> gastos = gastoRepositorio.listarPorUsuario(IDusuario);
         Double sumaG = 0.0;
         for (Gasto gasto : gastos) {
             sumaG += gasto.getMonto();
         }
         return sumaG;
+    }
+
+    public Double calcularSaldo(String IDusuario) {
+        
+        Double sumaI = saldoIngresos(IDusuario);
+        Double sumaG = saldoGastos(IDusuario);
+
+        Double saldo = sumaI - sumaG;
+
+        return saldo;
     }
 
     public Usuario buscarPorID(String id) throws ErrorServicio {
@@ -179,10 +198,8 @@ public class UsuarioServicio implements UserDetailsService {
 //    public void agregarIngreso(Usuario usuario, Ingreso ingreso) {
 //        usuario.getIngresos().add(ingreso);
 //    }
-
 //    @Transactional(propagation = Propagation.NESTED)
 //    public void agregarGasto(Usuario usuario, Gasto gasto) {
 //        usuario.getGastos().add(gasto);
 //    }
-
 }
