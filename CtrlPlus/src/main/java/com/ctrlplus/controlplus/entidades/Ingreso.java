@@ -1,7 +1,10 @@
 package com.ctrlplus.controlplus.entidades;
 
+import com.ctrlplus.controlplus.enums.CategoriaIngreso;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -23,13 +26,16 @@ public class Ingreso {
     private String descripcion;
     private Double monto;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
     @OneToOne
     private Comprobante comprobante;
     
+    @Enumerated(EnumType.STRING)
+    private CategoriaIngreso categoria;
+    
     @ManyToOne
-    Usuario usuario;
+    private Usuario usuario;
 
 }

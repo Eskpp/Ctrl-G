@@ -168,6 +168,12 @@
             <input type="text" name="descripcion" class="form-control" placeholder="Descripción" minlength="0"
               maxlength="100" />
             <br />
+            <p>Categorias:</p>
+            <select class="form-control" name="categoria">
+              <option th:each="categoria : ${categoriasingreso}" th:text="${categoria.nombre}" th:value="${categoria}">
+              </option>
+            </select>
+            <br>
             <p>Ingrese comprobante:</p>
 
             <input type="file" class="form-control" name="archivo" />

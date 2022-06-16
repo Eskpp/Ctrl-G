@@ -174,7 +174,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     public Double calcularSaldo(String IDusuario) {
-        
+
         Double sumaI = saldoIngresos(IDusuario);
         Double sumaG = saldoGastos(IDusuario);
 
@@ -194,6 +194,12 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
 
+    @Transactional(readOnly = true)
+    public List<Object> listarMovimientos(String usuarioId) {
+        return (List<Object>) usuarioRepositorio.ultimosMovimientos(usuarioId);
+    }
+}
+
 //    @Transactional(propagation = Propagation.NESTED)
 //    public void agregarIngreso(Usuario usuario, Ingreso ingreso) {
 //        usuario.getIngresos().add(ingreso);
@@ -202,4 +208,4 @@ public class UsuarioServicio implements UserDetailsService {
 //    public void agregarGasto(Usuario usuario, Gasto gasto) {
 //        usuario.getGastos().add(gasto);
 //    }
-}
+

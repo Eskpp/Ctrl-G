@@ -34,6 +34,7 @@
             <tr>
               <th scope="col">Fecha</th>
               <th scope="col">Monto</th>
+              <th scope="col">Categoria</th>
               <th scope="col">Descripcion</th>
               <th scope="col">Comprobante</th>
               <th scope="col">Modificar</th>
@@ -44,6 +45,8 @@
             <tr th:each="ingreso:${ingresos}">
               <td th:text="${ingreso.fecha}"></td>
               <td th:text="${ingreso.monto}"></td>
+              <td th:if="${ingreso.categoria}" th:text="${ingreso.categoria.nombre}"></td>
+              <td th:unless="${ingreso.categoria}"> </td>
               <td th:text="${ingreso.descripcion}"></td>
               <td>
                 <img src = "" id = "img"/> <input type="button" class="fa fa-picture-o" onclick="pic1()"/>
@@ -66,13 +69,33 @@
       document.getElementById("comprobante").src = "picture 1 source";
     } </script>
 
+      <!-- Modal body -->
+      <div class="modal-body" style="color:#0AE000 ;">
+        <form th:action="@{/ingreso/modificar}" method="POST" enctype="multipart/form-data">
+          <label for="id">Id</label>
+          <input class="form-control" type="text" value="" id="id-modificar" name="id" readonly>
+          <p>Monto:</p>
+          <input type="number" class="form-control" placeholder="Ingrese su ingreso" name="monto" />
+          <br />
+          <p>Descripcion:</p>
+          <input type="text" class="form-control" placeholder="Descripcion" minlength="0" maxlength="100"
+            name="descripcion" />
+          <br />
+          <p>Categorias:</p>
+            <select class="form-control" name="categoria">
+              <option th:each="categoria : ${categoriasingreso}" th:text="${categoria.nombre}" th:value="${categoria}">
+              </option>
+            </select>
+          <br>
+          <p>Ingrese comprobante:</p>
+          <input type="file" class="form-control" name="archivo" />
+          <br>
 
-
-
-
- 
-
-
+          <button type="submit" style="background-color:#0AE000;" class="btn btn-success" data-bs-dismiss="modal">
+            Editar ingreso
+          </button>
+        </form>
+      </div>
 
   <!-- The Moda2 -->
   <div class="modal" id="modificar">
@@ -111,16 +134,17 @@
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    $(document).on("click", ".abrir-editar", function () {
-      console.log("funciona");
-      var ingresoId = $(this).data('id');
-      $(".modal-body #id-modificar").val(ingresoId);
-    });
-  </script>
-  <script>
-    function borrar(id) {
+
+<script>
+  $(document).on("click", ".abrir-editar", function () {
+    var ingresoId = $(this).data('id');
+    $(".modal-body #id-modificar").val( ingresoId );
+});
+ </script>
+ <script>  
+  function borrar(id) {
       let text = "Seguro desea borrar el gasto?\nAprete Aceptar o Cancelar.";
       if (confirm(text) === true) {
         $.post("/ingreso/eliminar", { id: id });
