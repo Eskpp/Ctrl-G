@@ -2,6 +2,7 @@ package com.ctrlplus.controlplus.servicios;
 
 import com.ctrlplus.controlplus.entidades.Gasto;
 import com.ctrlplus.controlplus.entidades.Ingreso;
+import com.ctrlplus.controlplus.entidades.Movimiento;
 import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Rol;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
@@ -195,8 +196,8 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public List<Object> listarMovimientos(String usuarioId) {
-        return (List<Object>) usuarioRepositorio.ultimosMovimientos(usuarioId);
+    public List<Movimiento> listarMovimientos(String usuarioId) {
+        return (List<Movimiento>) usuarioRepositorio.ultimosMovimientos(usuarioId);
     }
 }
 

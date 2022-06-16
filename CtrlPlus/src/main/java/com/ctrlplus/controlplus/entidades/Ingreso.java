@@ -12,12 +12,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Data
-public class Ingreso {
-    
+@EqualsAndHashCode(callSuper = true)
+public class Ingreso extends Movimiento{
+   
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -33,9 +35,8 @@ public class Ingreso {
     private Comprobante comprobante;
     
     @Enumerated(EnumType.STRING)
-    private CategoriaIngreso categoria;
+    private CategoriaIngreso categoriaIngreso;
     
     @ManyToOne
     private Usuario usuario;
-
 }

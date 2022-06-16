@@ -31,7 +31,8 @@ public class IngresoServicio {
         Ingreso ingreso = new Ingreso();
         ingreso.setMonto(monto);
         ingreso.setFecha(new Date());
-        ingreso.setCategoria(categoria);
+        ingreso.setCategoria(null);
+        ingreso.setCategoriaIngreso(categoria);
         ingreso.setUsuario(usuario);
         ingreso.setDescripcion(descripcion);
         if (archivo != null) {
@@ -52,7 +53,7 @@ public class IngresoServicio {
             Ingreso ingreso = respuesta.get();
             ingreso.setMonto(monto);
             ingreso.setFecha(new Date());
-            ingreso.setCategoria(categoria);
+            ingreso.setCategoriaIngreso(categoria);
             ingreso.setDescripcion(descripcion);
             if (archivo != null) {
                 Comprobante comprobante = comprobanteServicio.guardar(archivo);

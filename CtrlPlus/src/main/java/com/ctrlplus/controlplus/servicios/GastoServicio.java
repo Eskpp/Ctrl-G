@@ -33,6 +33,7 @@ public class GastoServicio {
         gasto.setMonto(monto);
         gasto.setFecha(new Date());
         gasto.setCategoria(categoria);
+        gasto.setCategoriaIngreso(null);
         gasto.setDescripcion(descripcion);
         gasto.setUsuario(usuario);
         if (archivo != null) {

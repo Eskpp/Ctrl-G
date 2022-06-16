@@ -1,29 +1,18 @@
 package com.ctrlplus.controlplus.entidades;
 
 import com.ctrlplus.controlplus.enums.Categoria;
+import com.ctrlplus.controlplus.enums.CategoriaIngreso;
 import java.util.Date;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.GenericGenerator;
 
-@Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Gasto extends Movimiento{
-   
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+public class Movimiento {
     
     private String descripcion;
     private Double monto;
@@ -35,8 +24,12 @@ public class Gasto extends Movimiento{
     private Comprobante comprobante;
     
     @Enumerated(EnumType.STRING)
+    private CategoriaIngreso categoriaIngreso;
+    
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
     
     @ManyToOne
     private Usuario usuario;
+
 }
