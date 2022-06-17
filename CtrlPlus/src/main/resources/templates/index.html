@@ -9,9 +9,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="/css/style.css" rel="stylesheet" type="text/css" />
   <script src="https://kit.fontawesome.com/9fc711ed30.js" crossorigin="anonymous"></script>
+  
+  
 </head>
 
-<body>
+<body
+  th:attr="onload=|result('${totalAlquiler}' , '${totalAlimentos}', '${totalMovilidad}', '${totalSalud}', '${totalCompras}' , '${totalServicio}', '${totalImpuestos}', '${totalAhorros}', '${totalDeportes}', '${totalTarjetasDeCreditos}', '${totalDonaciones}', '${totalPrestamos}', '${totalOtros}',
+'${alquiler}', '${alimentos}', '${movilidad}', '${salud}', '${compras}', '${servicios}', '${impuestos}', '${ahorro}', '${deportes}', '${tarjetasDeCreditos}', '${donaciones}', '${prestamos}', '${otros}')|">
   <header>
 
 
@@ -28,9 +32,7 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/inicio"><strong>Inicio</strong></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/informes"><strong>Informes</strong></a> <!--Poner ruta controlador-->
-            </li>
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -87,8 +89,8 @@
           <div class="modal-header">
             <div style="text-align: center;">
               <h4 class="modal-title" style="color:#0AE000 ;"><strong>Editar Perfil</strong></h4>
-            </div> 
-            <button type="button"   class="btn-close" data-bs-dismiss="modal" style="background-color: #0AE000;"></button>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" style="background-color: #0AE000;"></button>
           </div>
 
           <!-- Modal body -->
@@ -125,7 +127,7 @@
 
   <!--inicio capas-->
 
-  <div id="generalingresos" >
+  <div id="generalingresos">
     <div id="generalingresoss">
       <h1 style="text-align: center">
         <strong>Tu saldo actual es:</strong>
@@ -141,6 +143,7 @@
         data-bs-target="#gastos" id="botonmenos">
         <h1 style="font-size: 60px"><strong>-</strong></h1>
       </button>
+      <canvas id="myChart"></canvas>
     </div>
   </div>
 
@@ -232,7 +235,61 @@
       </div>
     </div>
   </div>
+  <script>
+    function result(totalAlquiler, totalAlimentos, totalMovilidad, totalSalud, totalCompras, totalServicio, totalImpuestos, totalAhorros, totalDeportes, totalTarjetasDeCreditos, totalDonaciones, totalPrestamos, totalOtros,
+      alquiler, alimentos, movilidad, salud, compras, servicios, impuestos, ahorros, deportes, tarjetasDeCreditos, donaciones, prestamos, otros) {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: [alquiler, alimentos, movilidad, salud, compras, servicios, impuestos, ahorros, deportes, tarjetasDeCreditos, donaciones, prestamos, otros], //th:text de opciones 1 y 2/
+          datasets: [{
+            label: 'Mis Gastos', //Total de votos/
+            data: [totalAlquiler, totalAlimentos, totalMovilidad, totalSalud, totalCompras, totalServicio, totalImpuestos, totalAhorros, totalDeportes, totalTarjetasDeCreditos, totalDonaciones, totalPrestamos, totalOtros], //Resultados de las opciones de voto 1 y 2/
+            backgroundColor: [
+              'rgba(255, 0, 110, 0.7)',
+              'rgba(58, 134, 255, 0.7)',
+              'rgba(70, 130, 180, 0.7)',
+              'rgba(255, 235, 205, 0.7)',
+              'rgba(127, 255, 0, 0.7)',
+              'rgba(210, 105, 30, 0.7)',
+              'rgba(100, 149, 237, 0.7)',
+              'rgba(0, 255, 255, 0.7)',
+              'rgba(0, 0, 139, 0.7)',
+              'rgba(0, 139, 139, 0.7)',
+              'rgba(153, 50, 204, 0.7)',
+              'rgba(148, 0, 211, 0.7)',
+              'rgba(255, 20, 147, 0.7)',
+            ],
+            borderColor: [
+              'rgba(255, 0, 110, 1)',
+              'rgba(58, 134, 255, 1)',
+              'rgba(70, 130, 180, 1)',
+              'rgba(255, 235, 205, 1)',
+              'rgba(127, 255, 0, 1)',
+              'rgba(210, 105, 30, 1)',
+              'rgba(100, 149, 237, 1)',
+              'rgba(0, 255, 255, 1)',
+              'rgba(0, 0, 139, 1)',
+              'rgba(0, 139, 139, 1)',
+              'rgba(153, 50, 204, 1)',
+              'rgba(148, 0, 211, 1)',
+              'rgba(255, 20, 147, 1)',
+            ],
 
+            borderWidth: 2
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      })
+    };
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
     crossorigin="anonymous"></script>
