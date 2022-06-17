@@ -4,6 +4,7 @@ import com.ctrlplus.controlplus.entidades.Usuario;
 import com.ctrlplus.controlplus.enums.Categoria;
 import com.ctrlplus.controlplus.enums.CategoriaIngreso;
 import com.ctrlplus.controlplus.errores.ErrorServicio;
+import com.ctrlplus.controlplus.repositorios.GastoRepositorio;
 import com.ctrlplus.controlplus.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PortalControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private GastoRepositorio gastoRepositorio;
 
     @GetMapping("/")
     public String index() {
@@ -59,7 +63,21 @@ public class PortalControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("/inicio")
-    public String inicio(ModelMap modelo, HttpSession session) {
+    public String inicio(ModelMap modelo, HttpSession session,
+            Categoria alquiler,
+            Categoria alimentos,
+            Categoria movilidad,
+            Categoria salud,
+            Categoria compras,
+            Categoria servicios,
+            Categoria impuestos,
+            Categoria ahorros,
+            Categoria deportes,
+            Categoria tarjetasDeCreditos,
+            Categoria donaciones,
+            Categoria prestamos,
+            Categoria otros
+    ) {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado == null) {
             return "redirect:/login";
@@ -68,7 +86,20 @@ public class PortalControlador {
         modelo.addAttribute("saldo", usuarioServicio.calcularSaldo(IDusuario));
         modelo.addAttribute("categorias", Categoria.values());
         modelo.addAttribute("categoriasingreso", CategoriaIngreso.values());
-        modelo.addAttribute("movimientos", usuarioServicio.listarMovimientos(IDusuario));
+        modelo.addAttribute("totalAlquiler", gastoRepositorio.sumarPorCategoria(alquiler, IDusuario));
+        modelo.addAttribute("totalAlimentos", gastoRepositorio.sumarPorCategoria(alimentos, IDusuario));
+        modelo.addAttribute("totalMovilidad", gastoRepositorio.sumarPorCategoria(movilidad, IDusuario));
+        modelo.addAttribute("totalSalud", gastoRepositorio.sumarPorCategoria(salud, IDusuario));
+        modelo.addAttribute("totalCompras", gastoRepositorio.sumarPorCategoria(compras, IDusuario));
+        modelo.addAttribute("totalServicios", gastoRepositorio.sumarPorCategoria(servicios, IDusuario));
+        modelo.addAttribute("totalImpuestos", gastoRepositorio.sumarPorCategoria(impuestos, IDusuario));
+        modelo.addAttribute("totalAhorros", gastoRepositorio.sumarPorCategoria(ahorros, IDusuario));
+        modelo.addAttribute("totalDeportes", gastoRepositorio.sumarPorCategoria(deportes, IDusuario));
+        modelo.addAttribute("totalTarjetasDeCredito", gastoRepositorio.sumarPorCategoria(tarjetasDeCreditos, IDusuario));
+        modelo.addAttribute("totalDonaciones", gastoRepositorio.sumarPorCategoria(donaciones, IDusuario));
+        modelo.addAttribute("totalPrestamos", gastoRepositorio.sumarPorCategoria(prestamos, IDusuario));
+        modelo.addAttribute("totalOtros", gastoRepositorio.sumarPorCategoria(otros, IDusuario));
+        //modelo.addAttribute("movimientos", usuarioServicio.listarMovimientos(IDusuario));
         return "index";
     }
 

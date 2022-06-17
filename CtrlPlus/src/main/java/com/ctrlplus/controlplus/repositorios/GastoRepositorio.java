@@ -1,6 +1,7 @@
 package com.ctrlplus.controlplus.repositorios;
 
 import com.ctrlplus.controlplus.entidades.Gasto;
+import com.ctrlplus.controlplus.enums.Categoria;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,11 @@ public interface GastoRepositorio extends JpaRepository<Gasto, String> {
     @Query(value = "SELECT * FROM Gasto g WHERE g.categoria = :categoria AND g.usuario_id = :usuario", nativeQuery = true)
     public List<Gasto> buscarPorCategoria(@Param("categoria") String categoria, @Param("usuario") String usuario);
 
+    //buscar gastos por categoría
+    @Query(value = "SELECT sum(g.monto) FROM Gasto g WHERE g.categoria = :categoria AND g.usuario_id = :usuario", nativeQuery = true)
+    public Double sumarPorCategoria(@Param("categoria") Categoria categoria, @Param("usuario") String usuario);
+
+    
     //ordenar gastos por categoría
     @Query(value = "SELECT * FROM Gasto g ORDER BY categoria asc WHERE g.usuario_id = :usuario", nativeQuery = true)
     public List<Gasto> ordenarPorCategoriaAsc(@Param("usuario") String usuario);
