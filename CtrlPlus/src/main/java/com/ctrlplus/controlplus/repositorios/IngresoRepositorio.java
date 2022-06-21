@@ -21,7 +21,7 @@ public interface IngresoRepositorio extends JpaRepository<Ingreso, String> {
     @Query(value = "SELECT * FROM Ingreso i WHERE i.usuario_id = :usuario ORDER BY fecha asc", nativeQuery = true)
     public List<Ingreso> ordenarPorFechaAsc(@Param("usuario") String usuario);
     
-     @Query(value = "SELECT * FROM Gasto i WHERE i.usuario_id = :usuario ORDER BY fecha desc", nativeQuery = true)
+     @Query(value = "SELECT * FROM Ingreso i WHERE i.usuario_id = :usuario ORDER BY fecha desc", nativeQuery = true)
     public List<Ingreso> ordenarPorFechaDesc(@Param("usuario") String usuario);
     
     //buscar ingresos por monto

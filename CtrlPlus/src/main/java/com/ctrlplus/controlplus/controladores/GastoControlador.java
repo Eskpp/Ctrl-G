@@ -42,7 +42,7 @@ public class GastoControlador {
         try {
             gastoServicio.agregar(monto, categoria, descripcion, logeado, archivo);
 
-            return "index";
+            return "redirect:/inicio";
         } catch (ErrorServicio e) {
 
             modelo.addAttribute("error", e.getMessage());
@@ -86,7 +86,7 @@ public class GastoControlador {
         if (logeado == null) {
             return "/login";
         }
-        modelo.addAttribute("gastos", gastoServicio.listar(logeado.getId()));
+        modelo.addAttribute("gastos", gastoServicio.listarPorFecha(logeado.getId()));
         modelo.addAttribute("categorias", Categoria.values());
         return "gastos";// devolver donde se vea
     }
@@ -104,7 +104,7 @@ public class GastoControlador {
 
             modelo.addAttribute("error", ex.getMessage());
             modelo.addAttribute("id", id);// creo que no hace falta devolverlo
-            modelo.addAttribute("ingresos", gastoServicio.listar(logeado.getId()));
+            modelo.addAttribute("ingresos", gastoServicio.listarPorFecha(logeado.getId()));
             return "/gasto/listar";
         }
 

@@ -30,7 +30,7 @@ public class Gasto {
     
     private Double monto;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
     @OneToOne
