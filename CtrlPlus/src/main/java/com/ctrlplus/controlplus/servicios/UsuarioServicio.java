@@ -61,10 +61,11 @@ public class UsuarioServicio implements UserDetailsService {
     @Transactional(propagation = Propagation.NESTED)
     public Usuario modificar(String id, String mail, String nombre, String clave, String clave2) throws ErrorServicio {
 
-        validar(mail, nombre, clave, clave2);
+        validarSinMail(nombre, clave, clave2);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
+            validarMail(mail, id);
             Usuario usuario = respuesta.get();
             usuario.setMail(mail);
             usuario.setNombre(nombre);
@@ -130,6 +131,43 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("Las claves deben ser iguales.");
         }
 
+    }
+
+    public void validarSinMail(String nombre, String clave, String clave2) throws ErrorServicio {
+
+        String claveSegura = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        Pattern c = Pattern.compile(claveSegura);
+
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ErrorServicio("El nombre no puede ser nulo.");
+        }
+
+        if (clave == null || clave.trim().isEmpty()) {
+            throw new ErrorServicio("La clave no puede ser nula.");
+        }
+
+        if (!c.matcher(clave).matches()) {
+            throw new ErrorServicio("La clave debe contener al menos 8 caracteres, una mayúscula, "
+                    + "una minúscula, un número y un carácter especial.");
+        }
+
+        if (!clave.equals(clave2)) {
+            throw new ErrorServicio("Las claves deben ser iguales.");
+        }
+
+    }
+
+    public void validarMail(String mail, String id) throws ErrorServicio {
+
+        if (mail == null || mail.trim().isEmpty()) {
+            throw new ErrorServicio("El mail no puede ser nulo.");
+        }
+
+        if (usuarioRepositorio.buscarPorMail(mail) != null) {
+            if (!usuarioRepositorio.buscarPorMail(mail).getId().equals(id)) {
+                throw new ErrorServicio("Ya existe un usuario con ese mail.");
+            }  
+        }
     }
 
     @Override
