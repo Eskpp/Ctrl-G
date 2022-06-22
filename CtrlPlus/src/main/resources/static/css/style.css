@@ -89,7 +89,7 @@ button#botonmenos{
   margin-top: 50px;
   width: 1280px;
   height: 800px;
-  background-color:azure;
+  background-color:#d1e7dd;;
 }
 #generalingresoss{
   
@@ -97,7 +97,7 @@ button#botonmenos{
   margin-top: 50px;
   width: 950px;
   height: 800px;
-  background-color:azure;
+  background-color:#d1e7dd;;
 
 }
 
@@ -107,6 +107,11 @@ nav#nanvaringresos{
   
 
 }
+
+body#fondoOscuro{
+  background-color:#202124;
+}
+
 
 /*-----------------------Final vista ------------------------*/
 
