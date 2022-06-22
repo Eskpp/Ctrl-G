@@ -9,8 +9,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="/css/style.css" rel="stylesheet" type="text/css" />
         <script src="https://kit.fontawesome.com/9fc711ed30.js" crossorigin="anonymous"></script>
-
-
     </head>
 
     <body
@@ -139,18 +137,14 @@
                                 </button>
                             </form>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
-
         </div>
 
-
-
-        <!--inicio capas-->
+  <!--inicio capas-->
+  
+  <div class="alert alert-danger" th:if="${error}" th:text="${error}" ></div>
 
         <div id="generalingresos">
             <div id="generalingresoss">
@@ -168,8 +162,8 @@
                         data-bs-target="#gastos" id="botonmenos">
                     <h1 style="font-size: 60px"><strong>-</strong></h1>
                 </button>
-                <div  style="margin-left: auto;
-                      margin-right: auto; width:500px; height:500px"><canvas id="myChart"></canvas></div>
+                <div style="margin-left: auto;margin-right: auto; width:500px; height:500px"><canvas id="myChart"></canvas>
+                </div>
             </div>
         </div>
 
