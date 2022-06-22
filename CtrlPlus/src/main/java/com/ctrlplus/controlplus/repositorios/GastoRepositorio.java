@@ -22,7 +22,7 @@ public interface GastoRepositorio extends JpaRepository<Gasto, String> {
 
     //buscar gastos por categoría
     @Query(value = "SELECT sum(g.monto) FROM Gasto g WHERE g.categoria = :categoria AND g.usuario_id = :usuario", nativeQuery = true)
-    public Double sumarPorCategoria(@Param("categoria") Categoria categoria, @Param("usuario") String usuario);
+    public Double sumarPorCategoria(@Param("categoria") String categoria, @Param("usuario") String usuario);
 
     
     //ordenar gastos por categoría
