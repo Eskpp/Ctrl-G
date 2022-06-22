@@ -110,6 +110,11 @@ body#fondoOscuro{
   background-color:#202124;
 }
 
+footer {
+  position: static;
+  left: 0;
+  bottom: 0;
+}
 
 /*-----------------------Final vista ------------------------*/
 
