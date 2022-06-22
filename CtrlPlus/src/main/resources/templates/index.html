@@ -172,8 +172,8 @@
             <!-- Modal body -->
             <div class="modal-body" style="color: #0ae000">
               <form action="/usuario/editar" method="post">
-                <label for="id">Id</label>
                 <input
+                  hidden
                   class="form-control"
                   type="text"
                   th:value="${session.usuariosession.id}"
@@ -181,7 +181,6 @@
                   name="id"
                   readonly
                 />
-                <br />
                 <p>Ingrese su nuevo mail:</p>
                 <input
                   type="text"
@@ -246,6 +245,7 @@
           <strong>Tu saldo actual es:</strong>
         </h1>
         <h1 style="text-align: center">
+          $
           <strong th:text="${saldo}"></strong>
         </h1>
         <button
