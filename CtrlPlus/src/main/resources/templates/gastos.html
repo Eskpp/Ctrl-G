@@ -12,20 +12,20 @@
   <script src="https://kit.fontawesome.com/9fc711ed30.js" crossorigin="anonymous"></script>
 
   <style>
-    #img{
-        display: none;
+    #img {
+      display: none;
     }
-</style>
+  </style>
 
 </head>
 
-<body>
+<body id="fondoOscuro">
 
   <header>
     <nav th:replace="index :: navbar"></nav>
   </header>
   <div th:replace="index :: modaleditarp"></div>
-  <div class="container">
+  <div class="container" id="fondoRosa">
     <div class="row">
       <br>
       <div style="text-align:center;">
@@ -54,14 +54,15 @@
             <!--esta bien la lista de categorias?, el error estaba en que se pasaba tanto nombre como value, solo hacia falta el nombre.
         y faltaba el 'gasto.' antes de categoria, ya que es la categoria del gasto-->
             <td th:text="${gasto.descripcion}"></td>
-            <td>    <button id="boton" onclick="mostrar();" style="border:transparent ; background:transparent"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
-              
-              <div id="img">
-                  <button style="border:transparent ; background:transparent" id="boton" onclick="ocultar();"><strong>Cerrar</strong></button>
-                  <img width="500" height="auto" th:if="${gasto.comprobante != null}" th:src="${'/comprobante/gasto/' + gasto.id}">
-              </div></td>
+            <td>
+              <a class="abrir-comprobante btn btn-link-primary" role="button" data-bs-toggle="modal"
+                data-bs-target="#mostrarComprobante" th:attr="data-url=|${'/comprobante/gasto' + gasto.id}|" th:data-url="${'/comprobante/gasto/' + gasto.id}"><img
+                  th:if="${gasto.comprobante}" width="100" height="auto"
+                  th:src="${'/comprobante/gasto/' + gasto.id}"></a>
+            </td>
+
             <td><a class="abrir-editar btn btn-link-primary" role="button" data-bs-toggle="modal"
-                data-bs-target="#modificar" th:attr="data-id='${gasto.id}'" th:data-id="${gasto.id}"><i
+                data-bs-target="#modificar" th:data-id="${gasto.id}" th:data-monto="${gasto.monto}" th:data-descripcion="${gasto.descripcion}"><i
                   class="fa-solid fa-pencil"></i></a></td>
             <td><a class="btn btn-link" th:attr="onclick=|borrar('${gasto.id}')|" role="button"><i
                   class="fa-solid fa-trash" style="color:red ;"></i></td>
@@ -69,7 +70,16 @@
         </tbody>
       </table>
 
-     
+      <!-- The Mostrar Comprobante -->
+      <div class="modal" id="mostrarComprobante">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content" style="background-color: transparent; border: none;">
+            <div class="modal-body">
+              <img src="" id="comprobanteModal" style="width: 100%; max-width: 2000px; margin: auto;"></img>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- The Modificar -->
       <div class="modal" id="modificar">
@@ -84,13 +94,12 @@
             <!-- Modal body -->
             <div class="modal-body" style="color:#0AE000 ;">
               <form th:action="@{/gasto/modificar}" method="POST" enctype="multipart/form-data">
-                <label for="id">Id</label>
-                <input class="form-control" type="text" value="" id="id-modificar" name="id" readonly>
+                <input hidden class="form-control" type="text" value="" id="id-modificar" name="id" readonly>
                 <p>Monto:</p>
-                <input type="number" class="form-control" placeholder="Ingrese su gasto" name="monto" />
+                <input type="number" class="form-control" id="monto-modificar" placeholder="Ingrese su gasto" name="monto" />
                 <br />
                 <p>Descripcion:</p>
-                <input type="text" class="form-control" placeholder="Descripción" minlength="0" maxlength="100"
+                <input type="text" class="form-control" id="descripcion-modificar" placeholder="Descripción" minlength="0" maxlength="100"
                   name="descripcion" />
                 <br />
                 <p>Categorias:</p>
@@ -119,11 +128,15 @@
 
       <script>
         $(document).on("click", ".abrir-editar", function () {
-          console.log("funciona");
           var gastoId = $(this).data('id');
+          var gastoMonto = $(this).data('monto');
+          var gastoDescripcion = $(this).data('descripcion');
           $(".modal-body #id-modificar").val(gastoId);
+          $(".modal-body #monto-modificar").val(gastoMonto);
+          $(".modal-body #descripcion-modificar").val(gastoDescripcion);
         });
       </script>
+
       <script>
         function borrar(id) {
           let text = "Seguro desea borrar el gasto?\nAprete Aceptar o Cancelar.";
@@ -135,14 +148,22 @@
       </script>
 
       <script>
-        function mostrar(){
-            document.getElementById('img').style.display = 'block';
+        $(document).on("click", ".abrir-comprobante", function () {
+          var comprobanteUrl = $(this).data("url");
+          console.log(comprobanteUrl);
+          $(".modal-body #comprobanteModal").attr('src', comprobanteUrl);
+        });
+      </script>
+
+      <script>
+        function mostrar() {
+          document.getElementById('img').style.display = 'block';
         }
 
-        function ocultar(){
-            document.getElementById('img').style.display = 'none';
+        function ocultar() {
+          document.getElementById('img').style.display = 'none';
         }
-     </script>
+      </script>
 
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"

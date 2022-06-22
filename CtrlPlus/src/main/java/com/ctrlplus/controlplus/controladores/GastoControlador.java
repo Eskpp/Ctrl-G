@@ -63,7 +63,7 @@ public class GastoControlador {
         try {
 
             gastoServicio.modificar(id, monto, categoria, descripcion, archivo);
-            return "index";
+            return "redirect:/gasto/listar";
         } catch (ErrorServicio e) {
 
             modelo.addAttribute("error", e.getMessage());

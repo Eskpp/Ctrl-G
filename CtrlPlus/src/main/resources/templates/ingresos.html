@@ -19,7 +19,7 @@
 
 </head>
 
-<body>
+<body id="fondoOscuro">
   <header>
     <nav th:replace="index :: navbar"></nav>
   </header>
@@ -52,20 +52,15 @@
               <td th:text="${ingreso.fecha}"></td>
               <td th:text="${ingreso.monto}"></td>
               <td th:if="${ingreso.categoria}" th:text="${ingreso.categoria.nombre}"></td>
-              <td th:unless="${ingreso.categoria}"> </td>
               <td th:text="${ingreso.descripcion}"></td>
               <td>
-                <button id="boton" onclick="mostrar();" style="border:transparent ; background:transparent"><i
-                    class="fa fa-picture-o" aria-hidden="true"></i></button>
-                <div id="imgg">
-                  <button style="border:transparent ; background:transparent" id="boton"
-                    onclick="ocultar();"><strong>Cerrar</strong></button>
-                  <img width="500" height="auto" th:if="${ingreso.comprobante != null}"
-                    th:src="${'/comprobante/ingreso/' + ingreso.id}">  
-                </div>
+                <a class="abrir-comprobante btn btn-link-primary" role="button" data-bs-toggle="modal"
+                data-bs-target="#mostrarComprobante" th:attr="data-url=|${'/comprobante/ingreso' + ingreso.id}|" th:data-url="${'/comprobante/ingreso/' + ingreso.id}"><img
+                  th:if="${ingreso.comprobante}" width="100" height="auto"
+                  th:src="${'/comprobante/ingreso/' + ingreso.id}"></a>
               </td>
               <td><a class="abrir-editar btn btn-link-primary" role="button" data-bs-toggle="modal"
-                  data-bs-target="#modificar" th:attr="data-id='${ingreso.id}'" th:data-id="${ingreso.id}"><i
+                  data-bs-target="#modificar" th:data-id="${ingreso.id}" th:data-monto="${ingreso.monto}" th:data-descripcion="${ingreso.descripcion}"><i
                     class="fa-solid fa-pencil"></i></a></td>
               <td><a class="btn btn-link" th:attr="onclick=|borrar('${ingreso.id}')|" role="button"><i
                     class="fa-solid fa-trash" style="color:red ;"></i></td>
@@ -88,13 +83,12 @@
         <!-- Modal body -->
         <div class="modal-body" style="color:#0AE000 ;">
           <form th:action="@{/ingreso/modificar}" method="POST" enctype="multipart/form-data">
-            <label for="id">Id</label>
-            <input class="form-control" type="text" value="" id="id-modificar" name="id" readonly>
+            <input hidden class="form-control" type="text" value="" id="id-modificar" name="id" readonly>
             <p>Monto:</p>
-            <input type="number" class="form-control" placeholder="Ingrese su ingreso" name="monto" />
+            <input type="number" class="form-control" id="monto-modificar" placeholder="Ingrese su ingreso" name="monto" />
             <br />
             <p>Descripcion:</p>
-            <input type="text" class="form-control" placeholder="Descripcion" minlength="0" maxlength="100"
+            <input type="text" class="form-control" id="descripcion-modificar" placeholder="Descripcion" minlength="0" maxlength="100"
               name="descripcion" />
             <br />
             <p>Categorias:</p>
@@ -118,9 +112,17 @@
       </div>
     </div>
   </div>
+  
+  <!-- The Mostrar Comprobante -->
+  <div class="modal" id="mostrarComprobante">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: transparent; border: none;">
+        <div class="modal-body">
+          <img src="" id="comprobanteModal" style="width: 100%; max-width: 2000px; margin: auto;"></img>
+        </div>
+      </div>
+    </div>
   </div>
-
-
 
   <script>
     function borrar(id) {
@@ -130,6 +132,13 @@
         return "/ingreso/listar"; // no funciona el retorno, deberia buscar la forma de hacer el servicio sincrono y que se espere a que termine para el redirect?
       }
     }
+  </script>
+  <script>
+    $(document).on("click", ".abrir-comprobante", function () {
+      var comprobanteUrl = $(this).data("url");
+      console.log(comprobanteUrl);
+      $(".modal-body #comprobanteModal").attr('src', comprobanteUrl);
+    });
   </script>
 
 
@@ -145,7 +154,11 @@
   <script>
     $(document).on("click", ".abrir-editar", function () {
       var ingresoId = $(this).data('id');
+      var ingresoMonto = $(this).data('monto');
+      var ingresoDescripcion = $(this).data('descripcion');
       $(".modal-body #id-modificar").val(ingresoId);
+      $(".modal-body #monto-modificar").val(ingresoMonto);
+      $(".modal-body #descripcion-modificar").val(ingresoDescripcion);
     });
   </script>
 
