@@ -73,9 +73,9 @@
                 <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
               </li>
             </ul>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
     </nav>
   </header>
 
@@ -95,18 +95,23 @@
 
           <!-- Modal body -->
           <div class="modal-body" style="color:#0AE000 ;">
-            <form>
-
-              <p>Ingrese su nuevo nombre:</p>
-              <input type="text" class="form-control" placeholder=" Ingrese su nuevo nombre" />
+              <form action="/usuario/editar" method="post">
+              <label for="id">Id</label>
+              <input class="form-control" type="text" th:value="${session.usuariosession.id}" id="id-modificarp" name="id" readonly>
+              <br>
+              <p>Ingrese su nuevo mail:</p>
+              <input type="text" class="form-control" th:value="${session.usuariosession.mail}" placeholder=" Ingrese su nuevo mail" name="mail"/>
               <br />
+              <p>Ingrese su nuevo nombre:</p>
+              <input type="text" class="form-control" th:value="${session.usuariosession.nombre}" placeholder=" Ingrese su nuevo nombre" name="nombre"/>
+              <br />              
               <p>Cambiar Contraseña:</p>
               <input type="password" class="form-control" placeholder="Cambiar Contraseña" minlength="0"
-                maxlength="100" />
+                     maxlength="100" name="clave"/>
               <br />
               <p>Confirme Contraseña:</p>
               <input type="password" class="form-control" placeholder="Confirme Contraseña" minlength="0"
-                maxlength="100" />
+                     maxlength="100" name="clave2"/>
               <br>
 
               <button type="submit" style="background-color:#0AE000;" class="btn btn-success" data-bs-dismiss="modal">
@@ -126,6 +131,8 @@
 
 
   <!--inicio capas-->
+  
+  <div class="alert alert-danger" th:if="${error}" th:text="${error}" ></div>
 
   <div id="generalingresos">
     <div id="generalingresoss">
